@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mock Test</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        
+    </div>
+    <div class="container body-content">
+        <div style="width:45%;float:left;text-decoration:solid;font-size:large;padding-top:15px;" align="left"> <b>IPTSE Online Mock Test</b> </div>
+        <div style="width:45%;float:right;padding-top:15px;" align="left">Total Time :- 10 Minutes</div>
+        <div style="width:45%;float:right;padding-top:15px;" align="left">Total Question :- 10</div>
+        <div style="padding-top:100px;font-size:small;" align="left">Before you begin please read the following instruction carefully</div>
+    </div>
+    <div style="padding-top: 40px;font-size: large;padding-left: 114px;" align="left">How to Score More ?
+    <ul style="font-size:small;">
+        <li>aaaa</li>
+        <li>eeee</li>
+        <li>cccc</li>
+        <li>ssss</li>
+        <li>dddd</li>
+    </ul>
+    </div>
+    <div style="font-size: large;padding-left: 114px;" align="left">
+        How to Use the Application?
+        <ul style="font-size:small;">
+            <li>aaaa</li>
+            <li>eeee</li>
+            <li>cccc</li>
+            <li>ssss</li>
+            <li>dddd</li>
+        </ul>
+    </div>
+    <div style="font-size: large;padding-left: 114px;" align="left">
+        Tips
+        <ul style="font-size:small;">
+            <li>aaaa</li>
+            <li>eeee</li>
+            <li>cccc</li>
+            <li>ssss</li>
+            <li>dddd</li>
+        </ul>
+    </div>
+    <div style="font-size: large;padding-left: 114px;" align="left">
+        @using (Html.BeginForm("MockTest", "Mock", FormMethod.Post))
+        {
+        <input id="Start" type="submit" value="START" class="btn btn-danger"/>
+        }
+    </div>
+</body>
+</html>
