@@ -1,0 +1,5 @@
+C:\Users\manish.pathak\Documents\IPTSE_Online_Exam\IPTSEOnlineExam.DAL\bin\Debug\IPTSEOnlineExam.DAL.dll
+C:\Users\manish.pathak\Documents\IPTSE_Online_Exam\IPTSEOnlineExam.DAL\bin\Debug\IPTSEOnlineExam.DAL.pdb
+C:\Users\manish.pathak\Documents\IPTSE_Online_Exam\IPTSEOnlineExam.DAL\obj\Debug\IPTSEOnlineExam.DAL.csprojResolveAssemblyReference.cache
+C:\Users\manish.pathak\Documents\IPTSE_Online_Exam\IPTSEOnlineExam.DAL\obj\Debug\IPTSEOnlineExam.DAL.dll
+C:\Users\manish.pathak\Documents\IPTSE_Online_Exam\IPTSEOnlineExam.DAL\obj\Debug\IPTSEOnlineExam.DAL.pdb
