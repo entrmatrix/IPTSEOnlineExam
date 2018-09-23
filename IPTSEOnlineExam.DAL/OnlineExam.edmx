@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IPTSE_EXAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Question' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Question">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionCategoryId" Type="int" />
+          <Property Name="QuestionText" Type="nvarchar(max)" />
+          <Property Name="Points" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Question_Category' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Question_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDateTime" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Question_Choice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Question_Choice">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Question_Id" />
+            <PropertyRef Name="ChoiceText" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question_Id" Type="int" Nullable="false" />
+          <Property Name="ChoiceText" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Question_Duration_Map' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Question_Duration_Map">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestXQId" Type="int" />
+          <Property Name="RequestTime" Type="datetime" />
+          <Property Name="LeaveTime" Type="datetime" />
+          <Property Name="AnswerTime_Sec" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Test">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="DurationInMinutes" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Test_Question_Map' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Test_Question_Map">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" />
+          <Property Name="QuestionId" Type="ntext" />
+          <Property Name="QuestionSeqNo" Type="int" />
+          <Property Name="AnswerChoiceId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IPTSE_EXAM.dbo.tbl_Test_Result' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Test_Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" />
+          <Property Name="CandidateEmailId" Type="nvarchar" MaxLength="500" />
+          <Property Name="TestXQId" Type="int" />
+          <Property Name="ChoiceId" Type="int" />
+          <Property Name="MarkScored" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="IPTSE_EXAMModelStoreContainer">
+          <EntitySet Name="tbl_Question" EntityType="Self.tbl_Question" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Question].[Id] AS [Id], 
+    [tbl_Question].[QuestionCategoryId] AS [QuestionCategoryId], 
+    [tbl_Question].[QuestionText] AS [QuestionText], 
+    [tbl_Question].[Points] AS [Points], 
+    [tbl_Question].[IsActive] AS [IsActive], 
+    [tbl_Question].[CreatedBy] AS [CreatedBy], 
+    [tbl_Question].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[tbl_Question] AS [tbl_Question]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Question_Category" EntityType="Self.tbl_Question_Category" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Question_Category].[Id] AS [Id], 
+    [tbl_Question_Category].[Category] AS [Category], 
+    [tbl_Question_Category].[CreatedBy] AS [CreatedBy], 
+    [tbl_Question_Category].[CreatedDateTime] AS [CreatedDateTime]
+    FROM [dbo].[tbl_Question_Category] AS [tbl_Question_Category]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Question_Choice" EntityType="Self.tbl_Question_Choice" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Question_Choice].[Id] AS [Id], 
+    [tbl_Question_Choice].[Question_Id] AS [Question_Id], 
+    [tbl_Question_Choice].[ChoiceText] AS [ChoiceText], 
+    [tbl_Question_Choice].[IsActive] AS [IsActive], 
+    [tbl_Question_Choice].[CreatedBy] AS [CreatedBy], 
+    [tbl_Question_Choice].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[tbl_Question_Choice] AS [tbl_Question_Choice]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Question_Duration_Map" EntityType="Self.tbl_Question_Duration_Map" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Question_Duration_Map].[Id] AS [Id], 
+    [tbl_Question_Duration_Map].[TestXQId] AS [TestXQId], 
+    [tbl_Question_Duration_Map].[RequestTime] AS [RequestTime], 
+    [tbl_Question_Duration_Map].[LeaveTime] AS [LeaveTime], 
+    [tbl_Question_Duration_Map].[AnswerTime_Sec] AS [AnswerTime_Sec], 
+    [tbl_Question_Duration_Map].[CreatedBy] AS [CreatedBy], 
+    [tbl_Question_Duration_Map].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[tbl_Question_Duration_Map] AS [tbl_Question_Duration_Map]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Test" EntityType="Self.tbl_Test" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Test].[TestId] AS [TestId], 
+    [tbl_Test].[Name] AS [Name], 
+    [tbl_Test].[Description] AS [Description], 
+    [tbl_Test].[IsActive] AS [IsActive], 
+    [tbl_Test].[DurationInMinutes] AS [DurationInMinutes]
+    FROM [dbo].[tbl_Test] AS [tbl_Test]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Test_Question_Map" EntityType="Self.tbl_Test_Question_Map" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Test_Question_Map].[ID] AS [ID], 
+    [tbl_Test_Question_Map].[TestId] AS [TestId], 
+    [tbl_Test_Question_Map].[QuestionId] AS [QuestionId], 
+    [tbl_Test_Question_Map].[QuestionSeqNo] AS [QuestionSeqNo], 
+    [tbl_Test_Question_Map].[AnswerChoiceId] AS [AnswerChoiceId], 
+    [tbl_Test_Question_Map].[IsActive] AS [IsActive], 
+    [tbl_Test_Question_Map].[CreatedBy] AS [CreatedBy], 
+    [tbl_Test_Question_Map].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[tbl_Test_Question_Map] AS [tbl_Test_Question_Map]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Test_Result" EntityType="Self.tbl_Test_Result" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Test_Result].[Id] AS [Id], 
+    [tbl_Test_Result].[CandidateId] AS [CandidateId], 
+    [tbl_Test_Result].[CandidateEmailId] AS [CandidateEmailId], 
+    [tbl_Test_Result].[TestXQId] AS [TestXQId], 
+    [tbl_Test_Result].[ChoiceId] AS [ChoiceId], 
+    [tbl_Test_Result].[MarkScored] AS [MarkScored], 
+    [tbl_Test_Result].[CreatedBy] AS [CreatedBy], 
+    [tbl_Test_Result].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[tbl_Test_Result] AS [tbl_Test_Result]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IPTSE_EXAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Question">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionCategoryId" Type="Int32" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Points" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Question_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDateTime" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Question_Choice">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Question_Id" />
+            <PropertyRef Name="ChoiceText" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_Id" Type="Int32" Nullable="false" />
+          <Property Name="ChoiceText" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Question_Duration_Map">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestXQId" Type="Int32" />
+          <Property Name="RequestTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="AnswerTime_Sec" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Test">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DurationInMinutes" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Test_Question_Map">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" />
+          <Property Name="QuestionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionSeqNo" Type="Int32" />
+          <Property Name="AnswerChoiceId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Test_Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" />
+          <Property Name="CandidateEmailId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TestXQId" Type="Int32" />
+          <Property Name="ChoiceId" Type="Int32" />
+          <Property Name="MarkScored" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="IPTSE_EXAMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Question" EntityType="Self.tbl_Question" />
+          <EntitySet Name="tbl_Question_Category" EntityType="Self.tbl_Question_Category" />
+          <EntitySet Name="tbl_Question_Choice" EntityType="Self.tbl_Question_Choice" />
+          <EntitySet Name="tbl_Question_Duration_Map" EntityType="Self.tbl_Question_Duration_Map" />
+          <EntitySet Name="tbl_Test" EntityType="Self.tbl_Test" />
+          <EntitySet Name="tbl_Test_Question_Map" EntityType="Self.tbl_Test_Question_Map" />
+          <EntitySet Name="tbl_Test_Result" EntityType="Self.tbl_Test_Result" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IPTSE_EXAMModelStoreContainer" CdmEntityContainer="IPTSE_EXAMEntities">
+          <EntitySetMapping Name="tbl_Question">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question">
+              <MappingFragment StoreEntitySet="tbl_Question">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionCategoryId" ColumnName="QuestionCategoryId" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Question_Category">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question_Category">
+              <MappingFragment StoreEntitySet="tbl_Question_Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Question_Choice">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question_Choice">
+              <MappingFragment StoreEntitySet="tbl_Question_Choice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question_Id" ColumnName="Question_Id" />
+                <ScalarProperty Name="ChoiceText" ColumnName="ChoiceText" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Question_Duration_Map">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question_Duration_Map">
+              <MappingFragment StoreEntitySet="tbl_Question_Duration_Map">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestXQId" ColumnName="TestXQId" />
+                <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
+                <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
+                <ScalarProperty Name="AnswerTime_Sec" ColumnName="AnswerTime_Sec" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Test">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Test">
+              <MappingFragment StoreEntitySet="tbl_Test">
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DurationInMinutes" ColumnName="DurationInMinutes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Test_Question_Map">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Test_Question_Map">
+              <MappingFragment StoreEntitySet="tbl_Test_Question_Map">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="QuestionSeqNo" ColumnName="QuestionSeqNo" />
+                <ScalarProperty Name="AnswerChoiceId" ColumnName="AnswerChoiceId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Test_Result">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Test_Result">
+              <MappingFragment StoreEntitySet="tbl_Test_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="CandidateEmailId" ColumnName="CandidateEmailId" />
+                <ScalarProperty Name="TestXQId" ColumnName="TestXQId" />
+                <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+                <ScalarProperty Name="MarkScored" ColumnName="MarkScored" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
