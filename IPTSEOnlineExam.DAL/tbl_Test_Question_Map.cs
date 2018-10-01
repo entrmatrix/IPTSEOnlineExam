@@ -14,13 +14,25 @@ namespace IPTSEOnlineExam.DAL
     
     public partial class tbl_Test_Question_Map
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_Test_Question_Map()
+        {
+            this.tbl_Txn_Question_Duration_Map = new HashSet<tbl_Txn_Question_Duration_Map>();
+            this.tbl_Txn_Test_Result = new HashSet<tbl_Txn_Test_Result>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> TestId { get; set; }
-        public string QuestionId { get; set; }
-        public Nullable<int> QuestionSeqNo { get; set; }
-        public Nullable<int> AnswerChoiceId { get; set; }
+        public Nullable<int> QuestionId { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+    
+        public virtual tbl_Question tbl_Question { get; set; }
+        public virtual tbl_Test tbl_Test { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Txn_Question_Duration_Map> tbl_Txn_Question_Duration_Map { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Txn_Test_Result> tbl_Txn_Test_Result { get; set; }
     }
 }

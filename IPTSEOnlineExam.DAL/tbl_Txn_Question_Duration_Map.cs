@@ -12,7 +12,7 @@ namespace IPTSEOnlineExam.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Question_Duration_Map
+    public partial class tbl_Txn_Question_Duration_Map
     {
         public int Id { get; set; }
         public Nullable<int> TestXQId { get; set; }
@@ -21,5 +21,7 @@ namespace IPTSEOnlineExam.DAL
         public Nullable<int> AnswerTime_Sec { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+    
+        public virtual tbl_Test_Question_Map tbl_Test_Question_Map { get; set; }
     }
 }

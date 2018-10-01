@@ -12,7 +12,7 @@ namespace IPTSEOnlineExam.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Test_Result
+    public partial class tbl_Txn_Test_Result
     {
         public int Id { get; set; }
         public Nullable<int> CandidateId { get; set; }
@@ -22,5 +22,7 @@ namespace IPTSEOnlineExam.DAL
         public Nullable<int> MarkScored { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+    
+        public virtual tbl_Test_Question_Map tbl_Test_Question_Map { get; set; }
     }
 }

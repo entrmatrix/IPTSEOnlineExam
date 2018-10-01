@@ -14,9 +14,18 @@ namespace IPTSEOnlineExam.DAL
     
     public partial class tbl_Question_Category
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_Question_Category()
+        {
+            this.tbl_Question = new HashSet<tbl_Question>();
+        }
+    
         public int Id { get; set; }
         public string Category { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Question> tbl_Question { get; set; }
     }
 }

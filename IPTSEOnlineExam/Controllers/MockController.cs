@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IPTSEOnlineExam.BLL;
+using IPTSEOnlineExam.BLL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +17,9 @@ namespace IPTSEOnlineExam.Controllers
         }
         public ActionResult MockTest()
         {
+            MockTestBLL objMockTest = new MockTestBLL();
+            List<Questions> lstQuestions = new List<Questions>();
+            lstQuestions = objMockTest.GenerateQuestions();
             return View();
         }
         // GET: MockTest/Details/5

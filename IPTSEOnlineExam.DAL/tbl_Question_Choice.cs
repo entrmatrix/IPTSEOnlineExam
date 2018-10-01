@@ -17,8 +17,11 @@ namespace IPTSEOnlineExam.DAL
         public int Id { get; set; }
         public int Question_Id { get; set; }
         public string ChoiceText { get; set; }
+        public bool IsAnswer { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
+    
+        public virtual tbl_Question tbl_Question { get; set; }
     }
 }
