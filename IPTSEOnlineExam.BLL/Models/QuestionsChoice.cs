@@ -12,6 +12,7 @@ namespace IPTSEOnlineExam.BLL.Models
         public int Question_Id { get; set; }
         public string ChoiceText { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAnswer { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
     }

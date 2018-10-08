@@ -1,10 +1,9 @@
 ﻿
-<!DOCTYPE html>
-
 @{
     Layout = null;
 }
 
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -46,50 +45,28 @@
                 <img src="~/Images/logo.png" height="50" width="50" />
                 <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
         </div>
     </div>
     <br />
     <div class="container body-content">
-        <div style="width:45%;float:left;text-decoration:solid;font-size:large;" align="left"> <b>IPTSE Online Mock Test</b> </div>
-        <div style="width:45%;float:right;" align="left">Total Time :- 10 Minutes</div>
-        <div style="width:45%;float:right;" align="left">Total Question :- 10</div>
-        <div style="padding-top:50px;font-size:small;" align="left">Before you begin please read the following instruction carefully</div>
-    </div>
-    <div style="padding-top: 20px;font-size: large;padding-left: 114px;" align="left">
-        How to Score More ?
-        <ul style="font-size:small;">
-            <li>aaaa</li>
-            <li>eeee</li>
-            <li>cccc</li>
-            <li>ssss</li>
-            <li>dddd</li>
-        </ul>
-    </div>
-    <div style="font-size: large;padding-left: 114px;" align="left">
-        How to Use the Application?
-        <ul style="font-size:small;">
-            <li>aaaa</li>
-            <li>eeee</li>
-            <li>cccc</li>
-            <li>ssss</li>
-            <li>dddd</li>
-        </ul>
-    </div>
-    <div style="font-size: large;padding-left: 114px;" align="left">
-        Tips
-        <ul style="font-size:small;">
-            <li>aaaa</li>
-            <li>eeee</li>
-            <li>cccc</li>
-            <li>ssss</li>
-            <li>dddd</li>
-        </ul>
-    </div>
-    <div style="font-size: large;padding-left: 114px;" align="left">
-        @using (Html.BeginForm("MockTest", "Mock", FormMethod.Post))
-        {
-            <input id="Start" type="submit" value="START" class="btn btn-danger" />
-        }
+        <div>
+            @using (Html.BeginForm())
+            {
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <br>
+                <h2 style="color: #4cff00;" align="Center">@ViewData["success_msg"]</h2>
+
+                <h3 align="Center"><a href="http://portal.iptse.com">Login Now</a></h3>
+
+            }
+        </div>
     </div>
     <div class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container">
@@ -100,5 +77,6 @@
     </div>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -198,6 +198,7 @@
     <Content Include="Views\Mock\Index.cshtml" />
     <Content Include="Views\Mock\MockTest.cshtml" />
     <Content Include="Views\Final\FinalExam.cshtml" />
+    <Content Include="Views\Mock\Successfull.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
