@@ -31,12 +31,17 @@ namespace IPTSEOnlineExam.Controllers
                 ViewBag.questionNo = objQusetion.QuestNo;
                 Session["questNo"] = ViewBag.questionNo;
                 ViewBag.remainingTime = 60;
+                ViewBag.isSkip = false;
                 return View(objQusetion);
             }
             else
             {
                 Questions a = (Questions)Session["qData"];
                 ViewBag.questionNo = a.QuestNo;
+                if(Session["isBack"]!=null)
+                {
+                    ViewBag.isSkip = Session["isBack"];
+                }
                 if (Session["remainTime"] != null)
                 {
                     ViewBag.remainingTime = Session["remainTime"];
@@ -65,11 +70,18 @@ namespace IPTSEOnlineExam.Controllers
                 lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
                 if (lstQuestions.Count == 0)
                 {
+                    ViewBag.isSkip = false;
                     ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
                     return View("Successfull");
                 }
                 else
                 {
+                    //ViewBag.isSkip = true;
+                    var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                    if (lstQuestionsNew.Count > 0)
+                    { Session["isBack"] = true; }
+                    else
+                    { Session["isBack"] = false; }
                     objQusetion = new Questions();
                     objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
                     Session["qData"] = objQusetion;
@@ -94,8 +106,8 @@ namespace IPTSEOnlineExam.Controllers
             ViewBag.questionNo = Session["questNo"];
             lstQuestions = (List<Questions>)Session["Questions"];
             Session["Next"] = "true";
-            var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == Convert.ToInt32(QuestId));
-            lstQuestions.RemoveAll(t => t.Id == Convert.ToInt32(QuestId));
+            var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == Convert.ToInt32(QuestId) && r.skipQuestions==false);
+            lstQuestions.RemoveAll(t => t.Id == Convert.ToInt32(QuestId) && t.skipQuestions == false);
             Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
             if (lstQuestions.Count <= 10 && lstQuestions.Count > 0 && ViewBag.questionNo <= 10)
             {
@@ -107,6 +119,11 @@ namespace IPTSEOnlineExam.Controllers
                 }
                 else
                 {
+                    var lstQuestNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                    if(lstQuestNew.Count>0)
+                    { Session["isBack"] = true; }
+                    else
+                    { Session["isBack"] = false; }
                     objQusetion = new Questions();
                     objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
                     Session["qData"] = objQusetion;
@@ -133,6 +150,7 @@ namespace IPTSEOnlineExam.Controllers
 
             objQusetion = lstQuestions.Where(t => t.Id == Convert.ToInt32(QuestId)).Select(t1 => t1).FirstOrDefault();
             objQusetion.skipQuestions = true;
+            Session["isBack"] = true;
             objQusetion.skippedTime = Convert.ToInt32(totalTime.Substring(totalTime.Length - 2));
             Session["remainTime"] = 60;
             Session["questNo"] = objQusetion.QuestNo;
@@ -151,6 +169,10 @@ namespace IPTSEOnlineExam.Controllers
             lstQuestions = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).OrderBy(t2 => t2.QuestNo).ToList();
             if (lstQuestions.Count != 0)
             {
+                if(lstQuestions.Count>1)
+                { Session["isBack"] = true; }
+                else
+                { Session["isBack"] = false; }
                 objQusetion = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).FirstOrDefault();
                 objQusetion.skipQuestions = false;
                 Session["remainTime"] = objQusetion.skippedTime;
@@ -160,6 +182,8 @@ namespace IPTSEOnlineExam.Controllers
             }
             else
             {
+                Session["isSkip"] = false;
+                Session["isBack"] = false;
                 return RedirectToAction("MockTest", "Mock");
             }
         }

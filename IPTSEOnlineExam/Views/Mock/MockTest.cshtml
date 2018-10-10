@@ -94,9 +94,14 @@
             var skipBtn = document.getElementById('SKIP');
             skipBtn.disabled = true;
         }
+        $(document).ready(function () {
+            $("#SKIP").click(function () {
+                $("#BACK").attr('disabled', 'disabled');
+            });
+        });
         function enableBack() {
-            var backBtn = document.getElementById('BACK');
-            backBtn.disabled = false;
+            //var backBtn = document.getElementById('BACK');
+           // backBtn.disabled = false;
             var p = $('#hdnQId').val();
             var skip = 'True';
             var totalTimeOut = document.getElementById('countdown').innerHTML;
@@ -110,8 +115,8 @@
             return false;
         }
         function enableSkip() {
-            var backBtn = document.getElementById('BACK');
-            backBtn.disabled = false;
+            //var backBtn = document.getElementById('BACK');
+            //backBtn.disabled = false;
             var p = $('#hdnQId').val();
             var skip = 'True';
             var totalTimeOut = document.getElementById('countdown').innerHTML;
@@ -158,13 +163,14 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.QuestionText)
+                        @Html.DisplayFor(model => model.skipQuestions)
                     </dd>
                     @if (Model.questionsChoice != null)
                     {
                         foreach (var item in Model.questionsChoice)
                         {
                             <dt>
-                                @Html.RadioButtonFor(modelItem => modelItem.selectedvalue, item.Id, new { id = "A"+ item.Id, onclick = "enableNext()" })
+                                @Html.RadioButtonFor(modelItem => modelItem.selectedvalue, item.Id, new { id = "A" + item.Id, onclick = "enableNext()" })
                             </dt>
                             <dd>
                                 @Html.DisplayFor(modelItem => item.ChoiceText)
@@ -179,7 +185,8 @@
                 </dl>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input id="BACK" type="submit" value="BACK" class="btn btn-danger" onclick="return enableSkip();" />
+                       
+                        <input id="BACK" type="submit" value="BACK" class="btn btn-danger" onclick="return enableSkip();" @(ViewBag.isSkip == false ? "disabled='disabled'" : "") />
                         <input id="SKIP" type="submit" value="SKIP" class="btn btn-danger" onclick="return enableBack();" />
                         <input id="NEXT" disabled="disabled" type="submit" value="NEXT" class="btn btn-danger" />
                     </div>
@@ -187,7 +194,7 @@
                 <hr />
 
             </div>
-        }
+                            }
     </div>
     <div class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container">
