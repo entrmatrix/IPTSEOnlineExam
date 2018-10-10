@@ -43,24 +43,26 @@
     }
 
     <script>
-        
+
         var timer;
-        var d = 60;
+       // var d = 60;
+         var d = parseInt('@ViewBag.remainingTime');
         var _second = 1000;
         var _minute = _second * 60;
         var _hour = _minute * 60;
         var _day = _hour * 24;
         var end = new Date().getTime() + (60 * _second);
-                        var List = @Html.Raw(Json.Encode(Model));
+        var List = @Html.Raw(Json.Encode(Model));
         function showRemaining() {
+
             var now = new Date();
             var distance = end - now;
             if (distance < 15) {
-                document.getElementById('clock').style.color = "red";
+                // document.getElementById('clock').style.color = "red";
                 document.getElementById('countdown').style.color = "red";
             }
-           
-            if (distance < 0) {
+
+            if (d < 0) {
 
                 clearInterval(timer);
                 var p = $('#hdnQId').val();
@@ -70,7 +72,7 @@
                     {
                         type: "POST", //HTTP POST Method
                         url: "NextQuestionTimeOut",
-                        data: { QuestId: p, isTimeOut: timeOut, totalTime: totalTimeOut},
+                        data: { QuestId: p, isTimeOut: timeOut, totalTime: totalTimeOut },
                     });
                 window.location.reload();
                 return false;
@@ -81,6 +83,7 @@
             var seconds = Math.floor((distance % _minute) / _second);
             document.getElementById('countdown').innerHTML = ' Remaining Time :- ' + minutes + ':';
             document.getElementById('countdown').innerHTML += d--;
+            model.SpendTime = d;
         }
 
         timer = setInterval(showRemaining, 1000);
@@ -106,8 +109,7 @@
             window.location.reload();
             return false;
         }
-        function enableSkip()
-        {
+        function enableSkip() {
             var backBtn = document.getElementById('BACK');
             backBtn.disabled = false;
             var p = $('#hdnQId').val();
@@ -137,18 +139,18 @@
         </div>
     </div>
     <p>
-            <div id="countdown" style="float:right; color:blue; font-size:small;">
-
-            </div>
+        <div id="countdown" style="float:right; color:blue; font-size:small;" runat="server">
+        </div>
     </p>
     <br />
     <div class="container body-content">
         @using (Html.BeginForm("NextQuestion", "Mock", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            <div id="Questcountdown" style="float:right; color:blue; font-size:small;">
-                @Html.DisplayFor(model => model.skippedTime, new { id = "lblQuestTimer"})
-            </div>
+            @*<div id="Questcountdown" style="float:right; color:blue; font-size:small;">
+                    @Html.DisplayFor(model => model.skippedTime, new { id = "lblQuestTimer" })
+                </div>*@
+
             <div>
                 <dl class="dl-horizontal">
                     <dt>
@@ -157,36 +159,19 @@
                     <dd>
                         @Html.DisplayFor(model => model.QuestionText)
                     </dd>
-                    <dt>
-                        @Html.RadioButtonFor(model => model.selectedvalue, Model.questionsChoice[0].Id, new { id = "A1", onclick = "enableNext()" })
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.questionsChoice[0].ChoiceText)
-                    </dd>
-                    <dt>
-                        @Html.RadioButtonFor(model => model.selectedvalue, Model.questionsChoice[1].Id, new { id = "A2", onclick = "enableNext()" })
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.questionsChoice[1].ChoiceText)
-                    </dd>
-
-                    <dt>
-                        @Html.RadioButtonFor(model => model.selectedvalue, Model.questionsChoice[2].Id, new { id = "A3", onclick = "enableNext()" })
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.questionsChoice[2].ChoiceText)
-                    </dd>
-                    <dt>
-                        @Html.RadioButtonFor(model => model.selectedvalue, Model.questionsChoice[3].Id, new { id = "A4", onclick = "enableNext()" })
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.questionsChoice[3].ChoiceText)
-                    </dd>
-                    @Html.HiddenFor(m => m.questionsChoice[0].ChoiceText)
-                    @Html.HiddenFor(m => m.questionsChoice[1].ChoiceText)
-                    @Html.HiddenFor(m => m.questionsChoice[2].ChoiceText)
-                    @Html.HiddenFor(m => m.questionsChoice[3].ChoiceText)
-                    @Html.HiddenFor(m => m.Id,new { id = "hdnQId"})
+                    @if (Model.questionsChoice != null)
+                    {
+                        foreach (var item in Model.questionsChoice)
+                        {
+                            <dt>
+                                @Html.RadioButtonFor(modelItem => modelItem.selectedvalue, item.Id, new { id = "A"+ item.Id, onclick = "enableNext()" })
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(modelItem => item.ChoiceText)
+                            </dd>
+                        }
+                    }
+                    @Html.HiddenFor(m => m.Id, new { id = "hdnQId" })
                     @Html.HiddenFor(m => m.QuestionText)
                     @Html.HiddenFor(m => m.TestId)
                     @Html.HiddenFor(m => m.questionsChoice[0].IsAnswer)
@@ -194,8 +179,8 @@
                 </dl>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input id="BACK" type="submit" value="BACK" class="btn btn-danger" onclick="return enableSkip();"/>
-                        <input id="SKIP" type="submit" value="SKIP" class="btn btn-danger" onclick="return enableBack();"/>
+                        <input id="BACK" type="submit" value="BACK" class="btn btn-danger" onclick="return enableSkip();" />
+                        <input id="SKIP" type="submit" value="SKIP" class="btn btn-danger" onclick="return enableBack();" />
                         <input id="NEXT" disabled="disabled" type="submit" value="NEXT" class="btn btn-danger" />
                     </div>
                 </div>

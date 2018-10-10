@@ -30,12 +30,18 @@ namespace IPTSEOnlineExam.Controllers
                 objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
                 ViewBag.questionNo = objQusetion.QuestNo;
                 Session["questNo"] = ViewBag.questionNo;
+                ViewBag.remainingTime = 60;
                 return View(objQusetion);
             }
             else
             {
                 Questions a = (Questions)Session["qData"];
                 ViewBag.questionNo = a.QuestNo;
+                if (Session["remainTime"] != null)
+                {
+                    ViewBag.remainingTime = Session["remainTime"];
+                    Session["remainTime"] = null;
+                }
                 return View(a);
             }
         }
@@ -44,6 +50,9 @@ namespace IPTSEOnlineExam.Controllers
         {
             int qId = 0;
             MockTestBLL objMock = new MockTestBLL();
+
+            string aaa1 = ViewBag.Timedur;
+            //aaa.SpendTime = 
             objMock.SaveAnswer(aaa, timeSpend);
             ViewBag.questionNo = Session["questNo"];
             lstQuestions = (List<Questions>)Session["Questions"];
@@ -65,6 +74,8 @@ namespace IPTSEOnlineExam.Controllers
                     objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
                     Session["qData"] = objQusetion;
                     Session["questNo"] = objQusetion.QuestNo;
+                    ViewBag.remainingTime = 60;
+                    Session["remainTime"] = 60;
                     return RedirectToAction("MockTest", "Mock");
                 }
             }
@@ -100,6 +111,8 @@ namespace IPTSEOnlineExam.Controllers
                     objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
                     Session["qData"] = objQusetion;
                     Session["questNo"] = objQusetion.QuestNo;
+                    ViewBag.remainingTime = 60;
+                    Session["remainTime"] = 60;
                     return RedirectToAction("MockTest", "Mock");
                 }
             }
@@ -120,11 +133,13 @@ namespace IPTSEOnlineExam.Controllers
 
             objQusetion = lstQuestions.Where(t => t.Id == Convert.ToInt32(QuestId)).Select(t1 => t1).FirstOrDefault();
             objQusetion.skipQuestions = true;
-            objQusetion.skippedTime = 60 - Convert.ToInt32(totalTime);
+            objQusetion.skippedTime = Convert.ToInt32(totalTime.Substring(totalTime.Length - 2));
+            Session["remainTime"] = 60;
             Session["questNo"] = objQusetion.QuestNo;
             lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).OrderByDescending(t2 => t2.QuestNo).ToList();
             objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
             Session["qData"] = objQusetion;
+            //Session["remainTime"] = 60 - Convert.ToInt32(totalTime);
             return RedirectToAction("MockTest", "Mock");
         }
         [HttpPost]
@@ -138,6 +153,7 @@ namespace IPTSEOnlineExam.Controllers
             {
                 objQusetion = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).FirstOrDefault();
                 objQusetion.skipQuestions = false;
+                Session["remainTime"] = objQusetion.skippedTime;
                 Session["questNo"] = objQusetion.QuestNo;
                 Session["qData"] = objQusetion;
                 return RedirectToAction("MockTest", "Mock");

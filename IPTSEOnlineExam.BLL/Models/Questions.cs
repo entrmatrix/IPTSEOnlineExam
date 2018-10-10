@@ -35,5 +35,7 @@ namespace IPTSEOnlineExam.BLL.Models
         }
         public bool skipQuestions { get; set; }
         public int skippedTime { get; set; }
+        public int TotalTime { get; set; }
+        public int SpendTime { get; set; }
     }
 }
