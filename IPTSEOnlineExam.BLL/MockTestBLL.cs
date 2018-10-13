@@ -54,24 +54,25 @@ namespace IPTSEOnlineExam.BLL
                        skipQuestions = false
                    };
         }
-       
-        public void SaveAnswer(Questions questions, string timeSpend)
+
+        public void SaveAnswer(Questions questions)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
             tbl_Txn_Question_Duration_Map objMap = new tbl_Txn_Question_Duration_Map();
-            
+
             using (var objContext = new IPTSE_EXAMEntities())
             {
                 using (var dbcxtransaction = objContext.Database.BeginTransaction())
                 {
                     try
                     {
-                        
+
                         objQuest.CandidateId = 1;
                         objQuest.CandidateEmailId = "mk.pathak@gmail.com";
                         objQuest.TestXQId = questions.Id;
                         objQuest.ChoiceId = questions.selectedvalue;
+                        objQuest.MarkScored = questions.markScored;
                         var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == questions.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
                         if (isRight == "true")
                         {
@@ -79,7 +80,8 @@ namespace IPTSEOnlineExam.BLL
                         }
                         objContext.tbl_Txn_Test_Result.Add(objQuest);
                         objMap.TestXQId = questions.Id;
-                        objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
+                        objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(questions.skippedTime.Substring(questions.skippedTime.Length - 2)));
+                        //objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
                         objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();
@@ -88,7 +90,7 @@ namespace IPTSEOnlineExam.BLL
                 }
             }
         }
-        public void SaveAnswerTimeOut(string QuestId, string isTimeOut, string totalTime)
+        public void SaveAnswerTimeOut(Questions questions)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
@@ -100,19 +102,20 @@ namespace IPTSEOnlineExam.BLL
                 {
                     try
                     {
-                        var questions = objContext.tbl_Question.Where(a => a.Id == Convert.ToInt32(QuestId)).Select(a1 => a1).FirstOrDefault();
                         objQuest.CandidateId = 1;
                         objQuest.CandidateEmailId = "mk.pathak@gmail.com";
                         objQuest.TestXQId = questions.Id;
-                        objQuest.ChoiceId = 0;
-                        //var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == questions.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
-                        //if (isRight == "true")
-                        //{
-                        objQuest.MarkScored = 0;// objContext.tbl_Question.Where(t1 => t1.Id == questions.Id).Select(t2 => t2.Points).FirstOrDefault();
-                        //}
+                        objQuest.ChoiceId = questions.selectedvalue;
+                        objQuest.MarkScored = questions.markScored;
+                        var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == questions.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
+                        if (isRight == "true")
+                        {
+                            objQuest.MarkScored = objContext.tbl_Question.Where(t1 => t1.Id == questions.Id).Select(t2 => t2.Points).FirstOrDefault();
+                        }
                         objContext.tbl_Txn_Test_Result.Add(objQuest);
                         objMap.TestXQId = questions.Id;
-                        objMap.AnswerTime_Sec = Convert.ToInt32(totalTime);
+                        objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(questions.skippedTime.Substring(questions.skippedTime.Length - 2)));
+                        //objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
                         objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();
@@ -122,7 +125,7 @@ namespace IPTSEOnlineExam.BLL
             }
         }
 
-        public void SaveRemaining(List<Questions> lstQuestions, string timeSpend)
+        public void SaveRemaining(Questions quest)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
@@ -134,28 +137,45 @@ namespace IPTSEOnlineExam.BLL
                 {
                     try
                     {
-                        foreach (var quest in lstQuestions)
+                        objQuest.CandidateId = 1;
+                        objQuest.CandidateEmailId = "mk.pathak@gmail.com";
+                        objQuest.TestXQId = quest.Id;
+                        objQuest.ChoiceId = quest.selectedvalue;
+                        objQuest.MarkScored = quest.markScored;
+                        var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == quest.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
+                        if (isRight == "true")
                         {
-                            objQuest.CandidateId = 1;
-                            objQuest.CandidateEmailId = "mk.pathak@gmail.com";
-                            objQuest.TestXQId = quest.Id;
-                            objQuest.ChoiceId = quest.selectedvalue;
-                            var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == quest.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
-                            if (isRight == "true")
-                            {
-                                objQuest.MarkScored = objContext.tbl_Question.Where(t1 => t1.Id == quest.Id).Select(t2 => t2.Points).FirstOrDefault();
-                            }
-                            objContext.tbl_Txn_Test_Result.Add(objQuest);
-                            objMap.TestXQId = quest.Id;
-                            objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
-                            objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
-                            objContext.SaveChanges();
+                            objQuest.MarkScored = objContext.tbl_Question.Where(t1 => t1.Id == quest.Id).Select(t2 => t2.Points).FirstOrDefault();
                         }
+                        objContext.tbl_Txn_Test_Result.Add(objQuest);
+                        objMap.TestXQId = quest.Id;
+                        objMap.AnswerTime_Sec = objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(quest.skippedTime.Substring(quest.skippedTime.Length - 2)));
+                        objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
+                        objContext.SaveChanges();
                         dbcxtransaction.Commit();
                     }
                     catch { }
                 }
             }
+        }
+
+        public bool isAnswer(int? choiceId)
+        {
+            Boolean isAns;
+            using (var objContext = new IPTSE_EXAMEntities())
+            {
+                isAns = objContext.tbl_Question_Choice.Where(t => t.Id == choiceId).Select(t1 => t1.IsAnswer).FirstOrDefault();
+            }
+            return isAns;
+        }
+        public string selectedAnswer(int? choiceId)
+        {
+            string choiceText="";
+            using (var objContext = new IPTSE_EXAMEntities())
+            {
+                choiceText = objContext.tbl_Question_Choice.Where(t => t.Id == choiceId).Select(t1 => t1.ChoiceText).FirstOrDefault();
+            }
+            return choiceText;
         }
     }
 }

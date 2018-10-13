@@ -18,6 +18,11 @@ namespace IPTSEOnlineExam
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Mock", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Result",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Result", action = "ResultPage", id = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<IPTSEOnlineExam.BLL.Models.Questions>
+@using GridMvc.Html
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<br />
+<form id="abcForm">
+    <div class="container body-content">
+        <h4 style="float: right;color:red;" align="Center"><b>Total Score :- @ViewBag.Total out of 10</b></h4>
+        <br />
+        <div>
+            @using (Html.BeginForm("ResultPage", "Result", FormMethod.Get))
+            {
+                <div class="code-cut">
+                    @Html.Grid(Model).Columns(columns =>
+            {
+                columns.Add(c => c.QuestNo).Titled("Question No.");
+                columns.Add(c => c.QuestionText).Titled("Question");
+                columns.Add(c => c.SelectedText).Titled("Selected Answer");
+                columns.Add(c => c.skippedTime).Titled("Spend Time");
+                columns.Add(c => c.markScored).Titled("Mark Scored");
+            }).WithPaging(10).Sortable(true)
+                </div>
+                <br>
+                <h2 style="color: #4cff00;" align="Center">@ViewData["success_msg"]</h2>
+                <h3 align="Center"><a href="http://portal.iptse.com">Login Now</a></h3>
+            }
+        </div>
+    </div>
+</form>
