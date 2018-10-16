@@ -39,12 +39,12 @@
           //  return false;
         }
         function enableBack() {
-            //var backBtn = document.getElementById('BACK');
-            // backBtn.disabled = false;
-            var p = $('#hdnQId').val();
-            var skip = 'True';
+            var totalTimeOut = document.getElementById('clockdiv').innerHTML;
+            $('#hdnTotalTime').val(totalTimeOut);
             var totalTimeOut = document.getElementById('countdown').innerHTML;
             $('#hdnSkipId').val(totalTimeOut);
+            var p = $('#hdnQId').val();
+            var skip = 'True';
             $.ajax(
                 {
                     type: "POST", //HTTP POST Method
@@ -55,8 +55,10 @@
            // return false;
         }
         function enableSkip() {
-            //var backBtn = document.getElementById('BACK');
-            //backBtn.disabled = false;
+            var totalTimeOut = document.getElementById('clockdiv').innerHTML;
+            $('#hdnTotalTime').val(totalTimeOut);
+            var totalTimeOut = document.getElementById('countdown').innerHTML;
+            $('#hdnSkipId').val(totalTimeOut);
             var p = $('#hdnQId').val();
             var skip = 'True';
             var totalTimeOut = document.getElementById('countdown').innerHTML;
@@ -176,6 +178,10 @@
 
                     clearInterval(timer);
                     var p = $('#hdnQId').val();
+                    var totalTimeOut = document.getElementById('clockdiv').innerHTML;
+                    $('#hdnTotalTime').val(totalTimeOut);
+                    var totalTimeOut = document.getElementById('countdown').innerHTML;
+                    $('#hdnSkipId').val(totalTimeOut);
                     var timeOut = 'True';
                     var totalTimeOut = document.getElementById('countdown').innerHTML;
                     $.ajax(

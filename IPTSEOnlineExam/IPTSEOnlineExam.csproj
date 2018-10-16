@@ -206,12 +206,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Mock\Index.cshtml" />
     <Content Include="Views\Mock\MockTest.cshtml" />
-    <Content Include="Views\Final\FinalExam.cshtml" />
+    <Content Include="Views\Final\FullTest.cshtml" />
     <Content Include="Views\Result\ResultPage.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Shared\_ExamLayout.cshtml" />
+    <Content Include="Views\Final\Index.cshtml" />
+    <Content Include="Views\Shared\_FinalExamLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_FinalExamLayout.cshtml";
+}
+<form id="mockForm">
+    <p>
+        <div id="clockdiv" style="float:right; color:blue; font-size:small; display:none;" runat="server"></div><br />
+        <div id="countdown" style="float:right; color:blue; font-size:small;" runat="server">
+        </div>
+    </p>
+    <br />
+    <div class="container body-content">
+    </div>
+    <script>
+         // 10 minutes from now
+            //var res = $('#hdnTotalTime').val().split(":");
+            var time_in_minutes = 45;//parseInt(res[0]);
+           // var time_in_seconds = parseInt(res[1]);
+            var current_time = Date.parse(new Date());
+         var deadline = new Date(current_time + time_in_minutes * 60 * 1000);
+
+         function time_remaining(endtime) {
+             var t = Date.parse(endtime) - Date.parse(new Date());
+             var seconds = Math.floor((t / 1000) % 60);
+             var minutes = Math.floor((t / 1000 / 60) % 60);
+             var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+             var days = Math.floor(t / (1000 * 60 * 60 * 24));
+             return { 'total': t, 'days': days, 'hours': hours, 'minutes': minutes, 'seconds': seconds };
+         }
+         function run_clock(id, endtime) {
+             var clock = document.getElementById(id);
+             function update_clock() {
+                 var t = time_remaining(endtime);
+                 if (t.seconds.toString().length == 1) {
+                     clock.innerHTML = "Total ExamTime :- " + t.minutes + ': 0' + t.seconds;
+                 }
+                 else {
+                     clock.innerHTML = "Total ExamTime :- " + t.minutes + ': ' + t.seconds;
+                 }
+                 if (t.total <= 0) { clearInterval(timeinterval); }
+             }
+             update_clock(); // run function once at first to avoid delay
+             var timeinterval = setInterval(update_clock, 1000);
+         }
+            run_clock('clockdiv', deadline);
+
+         var timer;
+       // var d = 60;
+        var remTime = $('#hdnremainingTime').val();
+        var d = remTime;
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var end = new Date().getTime() + (60 * _second);
+        var List = @Html.Raw(Json.Encode(Model));
+            function showRemaining() {
+
+                var now = new Date();
+                var distance = end - now;
+                if (distance < 15) {
+                    // document.getElementById('clock').style.color = "red";
+                    document.getElementById('countdown').style.color = "red";
+                }
+
+                if (d < 0) {
+
+                    clearInterval(timer);
+                    var p = $('#hdnQId').val();
+                    var timeOut = 'True';
+                    var totalTimeOut = document.getElementById('countdown').innerHTML;
+                    $.ajax(
+                        {
+                            type: "POST", //HTTP POST Method
+                            url: "NextQuestionTimeOut",
+                            data: $('#mockForm').serialize(),
+                            success: function (response) {
+                                if (response.success) {
+                                    if (response.responseText == "Exam Complete!") {
+                                        window.location.href = "../Result/ResultPage";
+                                    }
+                                }
+                            },
+                        });
+                    window.location.reload();
+                    return false;
+                }
+                var days = Math.floor(distance / _day);
+                var hours = Math.floor((distance % _day) / _hour);
+                var minutes = Math.floor((distance % _hour) / _minute);
+                var seconds = Math.floor((distance % _minute) / _second);
+                document.getElementById('countdown').innerHTML = ' Remaining Time :- ' + minutes + ':';
+                if (d.toString().length == 1) {
+                    document.getElementById('countdown').innerHTML += '0'+d--;
+                }
+                else {
+                    document.getElementById('countdown').innerHTML += d--;
+                }
+            }
+
+            timer = setInterval(showRemaining, 1000);
+    </script>
+</form>
+

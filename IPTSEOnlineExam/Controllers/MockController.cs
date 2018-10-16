@@ -149,7 +149,6 @@ namespace IPTSEOnlineExam.Controllers
         {
             MockTestBLL objMock = new MockTestBLL();
            // lstQuestionsForResult = new List<Questions>();
-            lstQuestionsForResult = (List < Questions > )Session["Result"];
             if (Session["Result"] != null)
             {
                 lstQuestionsForResult = (List<Questions>)Session["Result"];
@@ -164,7 +163,7 @@ namespace IPTSEOnlineExam.Controllers
             lstQuestions = (List<Questions>)Session["Questions"];
             Session["Next"] = "true";
             var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == Convert.ToInt32(questionsTimeOut.Id) && r.skipQuestions==false);
-            itemToRemove.skippedTime = Convert.ToString(60 - Convert.ToInt32(questionsTimeOut.skippedTime.Substring(questionsTimeOut.skippedTime.Length - 2)));
+            itemToRemove.skippedTime = Convert.ToString("0");// Convert.ToString(60 - Convert.ToInt32(questionsTimeOut.skippedTime.Substring(questionsTimeOut.skippedTime.Length - 2)));
             itemToRemove.SelectedText = objMock.selectedAnswer(questionsTimeOut.selectedvalue);
             Boolean isAnswer1 = objMock.isAnswer(questionsTimeOut.selectedvalue);
             if (isAnswer1 == true)
