@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="AdminBLL.cs" />
     <Compile Include="MockTestBLL.cs" />
     <Compile Include="Models\QuestionCategory.cs" />
     <Compile Include="Models\QuestionDuration.cs" />

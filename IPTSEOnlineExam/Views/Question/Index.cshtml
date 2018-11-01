@@ -1,0 +1,49 @@
+﻿@model IEnumerable<IPTSEOnlineExam.BLL.Models.Questions>
+@{
+    ViewBag.Title = "Questions List";
+}
+<h2>Questions List</h2>
+<p>
+    @Html.ActionLink("Add New Question", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </th>
+        @*@foreach (var item in Model.Select(m => m.questionsChoice).SingleOrDefault())
+        {
+            <th>
+                @Html.DisplayName("Choice")
+            </th>
+        }*@
+        <th>
+            @Html.DisplayName("Action")
+        </th>
+
+    </tr>
+    @foreach (var item in Model.OrderByDescending(c => c.Id))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionText)
+            </td>
+            @*@foreach (var choice in item.questionsChoice)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => choice.ChoiceText)
+                </td>
+            }*@
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+            </td>
+        </tr>
+    }
+</table>

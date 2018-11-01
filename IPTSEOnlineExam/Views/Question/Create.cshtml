@@ -1,0 +1,59 @@
+﻿@using IPTSEOnlineExam.BLL.Models;
+@using System.Linq;
+@model IPTSEOnlineExam.BLL.Models.Questions
+
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Add New Question</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList)
+            @Html.ValidationMessageFor(model => model.TestId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList)
+            @Html.ValidationMessageFor(model => model.QuestionCategoryId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500 })
+            @Html.ValidationMessageFor(model => model.QuestionText)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.QuestionText)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

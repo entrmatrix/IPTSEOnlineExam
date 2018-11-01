@@ -1,0 +1,90 @@
+﻿@using IPTSEOnlineExam.BLL.Models;
+@using System.Linq;
+@model IPTSEOnlineExam.BLL.Models.Questions
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3>Edit Question Screen</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>
+        @Html.Label("Question Number")
+        @Html.DisplayFor(model => model.Id)
+        @Html.Label("Active")
+        @Html.EditorFor(model => model.IsActive)
+    </h4>
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.admin_id, "admin_id", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("admin_id", String.Empty)
+                @Html.ValidationMessageFor(model => model.admin_id)
+            </div>
+        </div>*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList)
+            @Html.ValidationMessageFor(model => model.TestId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList)
+            @Html.ValidationMessageFor(model => model.QuestionCategoryId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500 })
+            @Html.ValidationMessageFor(model => model.QuestionText)
+        </div>
+    </div>
+    @if (Model.questionsChoice != null)
+    {
+        for (int i = 0; i < Model.questionsChoice.Count; i++)
+        {
+            <div class="form-group">
+                @Html.Label(string.Format("Choice {0}", (i + 1).ToString()), new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => Model.questionsChoice[i].ChoiceText)
+
+                    @Html.Label("Correct Answer")
+                    @Html.EditorFor(model => Model.questionsChoice[i].IsAnswer, new { id = "A" + Model.questionsChoice[i].Id })
+
+                    @Html.Label("Active")
+                    @Html.EditorFor(model => Model.questionsChoice[i].IsActive)
+                    @Html.ValidationMessageFor(model => model.Id)
+                    @Html.HiddenFor(model => Model.questionsChoice[i].Question_Id)
+                    @Html.HiddenFor(model => Model.questionsChoice[i].Id)
+                </div>
+            </div>
+
+        }
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
