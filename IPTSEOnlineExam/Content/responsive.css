@@ -1,0 +1,612 @@
+/************************************************************************************
+smaller than 1280
+*************************************************************************************/
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .navbar-nav li:not(:first-child) a {
+        width: 19rem!important;
+        font-size: 1.7rem!important;
+    }
+}
+
+/************************************************************************************
+smaller than 1024
+*************************************************************************************/
+@media screen and (max-width: 1024px) {
+    header p {
+        font-size: 23px;
+    }
+
+    header p small {
+        font-size: 23px;
+    }
+
+    .navbar-nav li a {
+        font-size: 17px;
+        height: 50px;
+        padding: 14px 0;
+        width: 196px;
+    }
+
+    .navbar-nav li:first-child a {
+        font-size: 33px;
+    }
+
+    .post_list li,.post_main p {
+        width: 270px;
+    }
+
+    .post_main p {
+        height: 200px;
+    }
+
+    .proof_req_right a.file_btn {
+        margin: 0 0 10px;
+    }
+	
+	.req_right {
+		width: 57%;
+	}
+	.home_list_main p {
+    font-size: 70px;
+    height: 175px;
+}
+/* 5/9/2016 */
+.home_list_main h1 {
+    font-size: 17px;
+}	
+}
+
+@media screen and (min-width: 981px) and (max-width: 991px) {
+    .navbar-nav li:not(:first-child) a {
+        width: 140px!important;
+        font-size: 1.3rem!important;
+    }
+}
+
+/************************************************************************************
+smaller than 980
+*************************************************************************************/
+@media screen and (max-width: 980px) {
+    .inner_main {
+        padding: 15px 0 0;
+    }
+
+    .navbar-nav li {
+        margin: 0 7px 0 0;
+    }
+
+    .navbar-nav li a {
+        height: 40px;
+        padding: 10px 30px;
+        width: auto;
+    }
+
+    .navbar-nav li:first-child a {
+        font-size: 27px;
+        width: auto;
+        padding: 5px 10px;
+    }
+
+    .quadrant_main h1 {
+        padding: 7px;
+    }
+
+    .logo2 {
+        padding: 0 0 18px;
+    }
+
+    .right_head h6 {
+        display: inline-block;
+        vertical-align: sub;
+        width: 50%;
+        text-align: right;
+    }
+
+    .menu1 li a {
+        font-size: 14px;
+    }
+
+    .est_tbl {
+        overflow-x: scroll;
+        width: 100%;
+    }
+
+    .est_tbl table {
+        width: 1000px;
+    }
+
+    .post_list li,.post_main p {
+        width: 208px;
+    }
+
+    .post_main h1 {
+        font-size: 18px;
+    }
+
+    .post_main p {
+        height: 150px;
+        font-size: 32px;
+    }
+
+    .proof_req_head h1 {
+        font-size: 30px;
+        width: 45%;
+    }
+
+    .proof_req_head span {
+        width: 54%;
+    }
+
+    .proof_req_head span a.cancel_btn,.proof_req_head span a.submit_btn {
+        padding: 7px 13px;
+        width: 115px;
+    }
+
+    .proof_req_left {
+        display: block;
+        margin: 0;
+        width: 100%;
+    }
+
+    .proof_req_right {
+        display: block;
+        width: 100%;
+        margin: 10px 0 0;
+    }
+
+    .proof_req_right h4 {
+        margin: 15px 0;
+    }
+
+    .proof_req_right a.file_btn {
+        margin: 0 0 0 10px;
+    }
+
+    .proof_req_head span {
+        display: none;
+    }
+
+    .proof_req_head2 {
+        display: block;
+        background: #fff;
+        text-align: left;
+        padding: 20px 0 10px;
+    }
+
+    .proof_req_head2 span {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    .proof_req_head2 span a.cancel_btn,.proof_req_head2 span a.submit_btn {
+        padding: 7px 13px;
+        width: 115px;
+        text-decoration: none;
+    }
+	
+	.req_left {
+		display: block;
+		margin: 0 0 10px 0;
+		width: 100%;
+	}
+	
+	.req_right {
+		width: 100%;
+		display: block;
+	}
+	
+	.req_head span {
+		display: none;
+	}
+	
+	.req_head2 {
+		background: #fff none repeat scroll 0 0;
+		display: block;
+		padding: 5px 0 10px;
+		text-align: left;
+	}
+	
+	.req_head2 span {
+		display: block;
+		text-align: left;
+		width: 100%;
+	}
+	
+	.req_head2 span a {
+		text-decoration: none;
+	}
+/* 5/9/2016 */
+	.home_list li {
+    width: 35%;
+	margin: 6px;
+}
+}
+
+/************************************************************************************
+smaller than 800
+*************************************************************************************/
+@media screen and (max-width: 800px) {
+    
+}
+
+/************************************************************************************
+smaller than 768
+*************************************************************************************/
+@media screen and (max-width: 768px) {
+    
+}
+
+/************************************************************************************
+smaller than 767
+*************************************************************************************/
+@media screen and (max-width: 767px) {
+    .left_head {
+        text-align: center;
+    }
+
+    .right_head {
+        text-align: left;
+        padding: 10px 0 0;
+    }
+
+    header p,header p small {
+        font-size: 18px;
+    }
+
+    .logo {
+        padding: 0 10px 0 0;
+    }
+
+    .left_head .logo2 {
+        display: inline-block;
+        width: auto;
+        padding: 0 0 0 10px;
+    }
+
+    .left_head p {
+        display: none;
+    }
+
+    .right_head p {
+        display: inline-block;
+        width: 49%;
+    }
+
+    .right_head .logo2 {
+        display: none;
+    }
+
+    .sub_menu h1 {
+        display: block;
+    }
+
+    .menu2 {
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .navbar-nav li a:after {
+        display: none;
+    }
+
+    #cssmenu,#cssmenu ul,#cssmenu ul li,#cssmenu ul li a {
+        display: block;
+    }
+
+    .menu1,.menu2 {
+        display: none;
+    }
+
+    .breadcrumb {
+        display: block;
+    }
+
+    .desk_nav {
+        display: none;
+    }
+
+    .post_list li,.post_main p {
+        width: 40%;
+        margin: 0 5px 15px;
+    }
+	
+	.req_head h1 {
+		font-size: 34px;
+		text-align: center;
+		width: 100%;
+	}
+	
+	.contact_page .sub_menu {
+		display: none;
+	}
+	
+	.contact_page .inner2 {
+		border-radius: 5px;
+	}
+}
+
+/************************************************************************************
+smaller than 736
+*************************************************************************************/
+@media screen and (max-width: 736px) {
+    
+}
+
+/************************************************************************************
+smaller than 732
+*************************************************************************************/
+@media screen and (max-width: 732px) {
+    
+}
+
+/************************************************************************************
+smaller than 667
+*************************************************************************************/
+@media screen and (max-width: 667px) {
+	/* 5/9/2016 */
+   .home_list_main p {
+    font-size: 60px;
+	 height: 170px;
+} 
+
+}
+
+/************************************************************************************
+smaller than 640
+*************************************************************************************/
+@media screen and (max-width: 640px) {
+    .open_order_tbl table {
+        width: 640px;
+    }
+
+    .open_order_tbl {
+        overflow-x: scroll;
+        width: 100%;
+        height: 300px;
+    }
+
+    .menu1 li {
+        margin: 0;
+    }
+
+    .menu1 li a {
+        font-size: 13px;
+        padding: 5px 9px;
+    }
+
+    .menu1 li:last-child {
+        float: none;
+        margin-top: 10px;
+    }
+
+    .proof_req_head h1 {
+        font-size: 25px;
+        width: 100%;
+        display: block;
+        padding: 0;
+        text-align: center;
+    }
+	/* 5/9/2016 */
+	.home_list_main p {
+    font-size: 50px;
+    height: 150px;
+}
+
+}
+
+/************************************************************************************
+smaller than 568
+*************************************************************************************/
+@media screen and (max-width: 568px) {
+    .proof_req_right a.file_btn {
+        margin: 0 0 10px;
+        display: inline-block;
+    }
+}
+
+/************************************************************************************
+smaller than 480
+*************************************************************************************/
+@media screen and (max-width: 480px) {
+    .post_list li,.post_main p {
+        width: 47%;
+    }
+
+    .proof_req_right a {
+        padding: 0;
+        display: block;
+    }
+
+    .proof_req_in input[type="text"] {
+        width: 100%;
+    }
+/* 5/9/2016 */
+.home_list li {
+    width: 45%;
+}
+}
+
+/************************************************************************************
+smaller than 414
+*************************************************************************************/
+@media screen and (max-width: 414px) {
+    .quadrant_main h1 {
+        padding: 10px;
+        text-align: center;
+    }
+
+    header p {
+        font-size: 18px;
+        vertical-align: sub;
+    }
+
+    header p small {
+        font-size: 18px;
+    }
+
+    .menu1 li {
+        margin: 3px 0;
+        width: 49%;
+    }
+
+    .menu1 li:last-child {
+        margin-top: 3px;
+    }
+
+    .menu1 {
+        text-align: center;
+    }
+
+    .breadcrumb li a,.breadcrumb>.active {
+        font-size: 14px;
+    }
+
+    .breadcrumb>li+li:before {
+        padding: 0 0 0 3px;
+    }
+
+    .post_list li,.post_main p {
+        width: 100%;
+        display: block;
+        margin: 0 0 15px;
+    }
+
+    .post_main p {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .proof_req_in {
+        padding: 20px 15px;
+    }
+
+    .proof_req_right h4 {
+        margin: 0 0 10px;
+    }
+
+    .proof_req_in textarea {
+        height: 140px;
+    }
+
+    .sub_menu {
+        padding: 10px 5px;
+    }
+	
+	.req_in {
+		padding: 15px;
+	}
+	
+	.req_in input[type="text"] {
+		width: 100%;
+	}
+	
+	.req_in textarea {
+        height: 140px;
+    }
+	
+	.req_in input[type="text"] {
+		margin: 0 0 10px;
+	}
+	/* 5/9/2016 */
+	.home_list li {
+    width: 60%;
+}
+}
+
+/************************************************************************************
+smaller than 412
+*************************************************************************************/
+@media screen and (max-width: 412px) {
+    
+}
+
+/************************************************************************************
+smaller than 384
+*************************************************************************************/
+@media screen and (max-width: 384px) {
+    .proof_req_head h1 {
+        font-size: 21px;
+    }
+	
+	.req_head h1 {
+		font-size: 27px;
+	}
+}
+
+/************************************************************************************
+smaller than 375
+*************************************************************************************/
+@media screen and (max-width: 375px) {
+    /* 5/9/2016 */
+	.home_list li {
+    width: 70%;
+}
+}
+
+/************************************************************************************
+smaller than 360
+*************************************************************************************/
+@media screen and (max-width: 360px) {
+    
+}
+
+/************************************************************************************
+smaller than 320
+*************************************************************************************/
+@media screen and (max-width: 320px) {
+    /* .logo {
+        display: block;
+        padding: 0;
+    } */
+	/*************** css changed on 19-9-2016 ***************/
+	.logo {
+		display: table;
+		padding: 0;
+		margin: 0 auto;
+    }
+
+    header p {
+        padding: 10px 0;
+    }
+
+    .right_head p {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .right_head h6 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu1 li {
+        width: 100%;
+        display: block;
+    }
+
+    .breadcrumb li a,.breadcrumb>.active {
+        font-size: 12px;
+    }
+
+    .left_head .logo2 {
+        padding: 10px 0 0;
+    }
+
+    .proof_req_head span a.cancel_btn,.proof_req_head span a.submit_btn {
+        width: 105px;
+    }
+
+    .proof_req_in label,.proof_req_in h6,.proof_req_in p,.proof_req_right a,.proof_req_right h4 {
+        font-size: 14px;
+    }
+
+    .proof_req_in h5 {
+        font-size: 18px;
+    }
+	/* 5/9/2016 */
+	.home_list li {
+    width: 80%;
+}
+}

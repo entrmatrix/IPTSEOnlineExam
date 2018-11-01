@@ -9,7 +9,10 @@ namespace IPTSEOnlineExam.Controllers
 {
     public class ResultController : Controller
     {
-        [HttpGet]
+         public ActionResult Index()
+        {
+            return View();
+        }
         public ActionResult ResultPage()
         {
             List<Questions> lstQuestion = new List<Questions>();
@@ -22,17 +25,20 @@ namespace IPTSEOnlineExam.Controllers
                     tot = tot + item.markScored;
                 }
                 ViewBag.Total = tot;
-                return View(lstQuestion);
+                return View(lstQuestion.ToList());
+                // View(lstQuestion);
             }
             else
             {
-                return View();
+                return View("ResultPage");
             }
 
         }
-        public ActionResult PublishResult()
+        [HttpPost]
+        public ActionResult ResultPage(int id=0)
         {
-            return RedirectToAction("ResultPage", "Result");
+            return RedirectToAction("ResultPage");
+
         }
         // GET: Result/Details/5
         public ActionResult Details(int id)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IPTSEOnlineExam.AuthData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,15 @@ namespace IPTSEOnlineExam
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+        }
+        protected void Application_EndRequest()
+         {   //here breakpoint
+            // under debug mode you can find the exceptions at code: this.Context.AllErrors
+            var err=this.Context.AllErrors;
         }
     }
 }
