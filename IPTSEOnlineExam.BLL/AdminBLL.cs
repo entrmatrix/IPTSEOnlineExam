@@ -71,6 +71,15 @@ namespace IPTSEOnlineExam.BLL
             //}
         }
 
+        public bool ValidAnswer(Questions questions_tbl)
+        {
+            bool isValid = true;
+
+            isValid = questions_tbl.questionsChoice.Any(m => m.IsAnswer) ? true : false;
+
+            return isValid;
+        }
+
         public List<QuestionCategory> GetQuestionCategory()
         {
             IPTSE_EXAMEntities objEntities = new IPTSE_EXAMEntities();
