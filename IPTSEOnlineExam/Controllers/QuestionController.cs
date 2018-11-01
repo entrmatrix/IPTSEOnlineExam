@@ -53,15 +53,32 @@ namespace IPTSEOnlineExam.Controllers
             AdminBLL adminBLL = new AdminBLL();
             if (ModelState.IsValid)
             {
-                try
+                var count = questions_tbl.questionsChoice.RemoveAll(m => string.IsNullOrEmpty(m.ChoiceText));
+                questions_tbl.questionsChoice.ForEach(m =>
                 {
-                    adminBLL.AddQuestion(questions_tbl);
-                    return RedirectToAction("Index");
+                    m.IsActive = true;
+                    m.CreatedBy = "Admin";
+                    m.CreatedDate = DateTime.Now;
+                });
+
+                questions_tbl.IsActive = true;
+
+                if (adminBLL.ValidAnswer(questions_tbl))
+                {
+                    try
+                    {
+                        adminBLL.AddQuestion(questions_tbl);
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorMessage = ex.InnerException;
+                        throw ex;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    ViewBag.ErrorMessage = ex.InnerException;
-                    throw ex;
+                    ViewBag.Error_Message = "Select atleast one answer";
                 }
             }
 
