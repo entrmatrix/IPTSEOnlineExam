@@ -1,10 +1,21 @@
 ﻿@using IPTSEOnlineExam.BLL.Models;
 @using System.Linq;
 @model IPTSEOnlineExam.BLL.Models.Questions
-
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @{
     ViewBag.Title = "Edit";
 }
+<style>
+    input, select, textarea {
+        max-width: 375px;
+    }
+    td, th {
+        padding-right:5px;
+    }
+</style>
+
 <h2>Add New Question</h2>
 
 @using (Html.BeginForm())
@@ -18,21 +29,21 @@
     <div class="form-group">
         @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList)
+            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TestId)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList)
+            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.QuestionCategoryId)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500 })
+            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500, @class = "form-control input-sm" })
             @Html.ValidationMessageFor(model => model.QuestionText)
         </div>
     </div>
@@ -40,57 +51,97 @@
     <div class="form-group">
         @Html.Label("Choice 1", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.questionsChoice[0].ChoiceText)
-            @Html.ValidationMessageFor(model => model.questionsChoice[0].ChoiceText)
-            @Html.Label("Is Answer", new { @class = "style: margin:10;" })
-            @Html.EditorFor(model => model.questionsChoice[0].IsAnswer)
-            @Html.ValidationMessageFor(model => model.questionsChoice[0].IsAnswer)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 375px;">
+                        @Html.EditorFor(model => model.questionsChoice[0].ChoiceText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.questionsChoice[0].ChoiceText)
+                        </td>
+                    <td>
+                        @Html.Label("Is Answer", new { @class = "style: margin:10;" })
+                        @Html.EditorFor(model => model.questionsChoice[0].IsAnswer)
+                        @Html.ValidationMessageFor(model => model.questionsChoice[0].IsAnswer)
+                    </td>
+                    </tr>
+                    </table>
         </div>
     </div>
     <div class="form-group">
         @Html.Label("Choice 2", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.questionsChoice[1].ChoiceText)
-            @Html.ValidationMessageFor(model => model.questionsChoice[1].ChoiceText)
-            @Html.Label("Is Answer", new { @class = "style: margin:10;" })
-            @Html.EditorFor(model => model.questionsChoice[1].IsAnswer)
-            @Html.ValidationMessageFor(model => model.questionsChoice[1].IsAnswer)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 375px;">
+                        @Html.EditorFor(model => model.questionsChoice[1].ChoiceText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.questionsChoice[1].ChoiceText)
+                    </td>
+                    <td>
+                        @Html.Label("Is Answer", new { @class = "style: margin:10;" })
+                        @Html.EditorFor(model => model.questionsChoice[1].IsAnswer)
+                        @Html.ValidationMessageFor(model => model.questionsChoice[1].IsAnswer)
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="form-group">
         @Html.Label("Choice 3", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.questionsChoice[2].ChoiceText)
-            @Html.ValidationMessageFor(model => model.questionsChoice[2].ChoiceText)
-            @Html.Label("Is Answer", new { @class = "style: margin:10;" })
-            @Html.EditorFor(model => model.questionsChoice[2].IsAnswer)
-            @Html.ValidationMessageFor(model => model.questionsChoice[2].IsAnswer)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 375px;">
+                        @Html.EditorFor(model => model.questionsChoice[2].ChoiceText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.questionsChoice[2].ChoiceText)
+                    </td>
+                    <td>
+                        @Html.Label("Is Answer", new { @class = "style: margin:10;" })
+                        @Html.EditorFor(model => model.questionsChoice[2].IsAnswer)
+                        @Html.ValidationMessageFor(model => model.questionsChoice[2].IsAnswer)
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="form-group">
         @Html.Label("Choice 4", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.questionsChoice[3].ChoiceText)
-            @Html.ValidationMessageFor(model => model.questionsChoice[3].ChoiceText)
-            @Html.Label("Is Answer", new { @class = "style: margin:10;" })
-            @Html.EditorFor(model => model.questionsChoice[3].IsAnswer)
-            @Html.ValidationMessageFor(model => model.questionsChoice[3].IsAnswer)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 375px;">
+                        @Html.EditorFor(model => model.questionsChoice[3].ChoiceText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.questionsChoice[3].ChoiceText)
+                    </td>
+                    <td>
+                        @Html.Label("Is Answer", new { @class = "style: margin:10;" })
+                        @Html.EditorFor(model => model.questionsChoice[3].IsAnswer)
+                        @Html.ValidationMessageFor(model => model.questionsChoice[3].IsAnswer)
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="form-group">
         @Html.Label("Choice 4", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.questionsChoice[4].ChoiceText)
-            @Html.ValidationMessageFor(model => model.questionsChoice[4].ChoiceText)
-            @Html.Label("Is Answer", new { @class = "style: margin:10;" })
-            @Html.EditorFor(model => model.questionsChoice[4].IsAnswer)
-            @Html.ValidationMessageFor(model => model.questionsChoice[4].IsAnswer)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 375px;">
+                        @Html.EditorFor(model => model.questionsChoice[4].ChoiceText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.questionsChoice[4].ChoiceText)
+                    </td>
+                    <td>
+                        @Html.Label("Is Answer", new { @class = "style: margin:10;" })
+                        @Html.EditorFor(model => model.questionsChoice[4].IsAnswer)
+                        @Html.ValidationMessageFor(model => model.questionsChoice[4].IsAnswer)
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add Question" class="btn btn-default" />
+            <input type="submit" value="Add Question" class="btn btn-info btn-block" />
         </div>
     </div>
 </div>
@@ -99,6 +150,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

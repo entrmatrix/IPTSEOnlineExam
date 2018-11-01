@@ -1,11 +1,18 @@
 ﻿@using IPTSEOnlineExam.BLL.Models;
 @using System.Linq;
 @model IPTSEOnlineExam.BLL.Models.Questions
-
 @{
-    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+     ViewBag.Title = "Edit";
+}
+<style>
+    input, select, textarea {
+        max-width: 375px;
+    }
 
+</style>
 <h3>Edit Question Screen</h3>
 
 @using (Html.BeginForm())
@@ -34,21 +41,21 @@
     <div class="form-group">
         @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList)
+            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList, new {@class = "form-control" })
             @Html.ValidationMessageFor(model => model.TestId)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList)
+            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.QuestionCategoryId)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500 })
+            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500, @class = "form-control input-sm" })
             @Html.ValidationMessageFor(model => model.QuestionText)
         </div>
     </div>
@@ -59,16 +66,23 @@
             <div class="form-group">
                 @Html.Label(string.Format("Choice {0}", (i + 1).ToString()), new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => Model.questionsChoice[i].ChoiceText)
-
-                    @Html.Label("Correct Answer")
-                    @Html.EditorFor(model => Model.questionsChoice[i].IsAnswer, new { id = "A" + Model.questionsChoice[i].Id })
-
-                    @Html.Label("Active")
-                    @Html.EditorFor(model => Model.questionsChoice[i].IsActive)
-                    @Html.ValidationMessageFor(model => model.Id)
-                    @Html.HiddenFor(model => Model.questionsChoice[i].Question_Id)
-                    @Html.HiddenFor(model => Model.questionsChoice[i].Id)
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                @Html.TextAreaFor(model => Model.questionsChoice[i].ChoiceText, new { @class = "form-control input-sm" })
+                            </td>
+                            <td>
+                                @Html.Label("Correct Answer")
+                                @Html.EditorFor(model => Model.questionsChoice[i].IsAnswer, new { id = "A" + Model.questionsChoice[i].Id, @class = "form-control input-sm" })
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.Label("Active")
+                                @Html.EditorFor(model => Model.questionsChoice[i].IsActive, new { @class = "form-control input-sm" })
+                                @Html.ValidationMessageFor(model => model.Id)
+                                @Html.HiddenFor(model => Model.questionsChoice[i].Question_Id)
+                                @Html.HiddenFor(model => Model.questionsChoice[i].Id)
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
@@ -76,7 +90,7 @@
     }
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-info btn-block" />
         </div>
     </div>
 </div>
@@ -85,6 +99,4 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

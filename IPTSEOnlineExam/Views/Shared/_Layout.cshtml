@@ -38,6 +38,7 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
+            <div id="clockdiv1" class="navbar-header navbar-left navbar-brand" style="float:right;font-size:small;padding-top: 20px;" runat="server"></div>
             <div class="navbar-header navbar-right ">
                 <img src="~/Images/logo.png" height="50" width="50" />
                 <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
@@ -57,8 +58,10 @@
             </div>
         </footer>
     </div>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
