@@ -55,7 +55,7 @@ namespace IPTSEOnlineExam.BLL
                    };
         }
 
-        public void SaveAnswer(Questions questions)
+        public void SaveAnswer(Questions questions, login_table objUserProfile)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
@@ -67,9 +67,8 @@ namespace IPTSEOnlineExam.BLL
                 {
                     try
                     {
-
-                        objQuest.CandidateId = 1;
-                        objQuest.CandidateEmailId = "mk.pathak@gmail.com";
+                        objQuest.CandidateId = Convert.ToInt32(objUserProfile.Id);
+                        objQuest.CandidateEmailId = objUserProfile.email;
                         objQuest.TestXQId = questions.Id;
                         objQuest.ChoiceId = questions.selectedvalue;
                         objQuest.MarkScored = questions.markScored;
@@ -90,7 +89,7 @@ namespace IPTSEOnlineExam.BLL
                 }
             }
         }
-        public void SaveAnswerTimeOut(Questions questions)
+        public void SaveAnswerTimeOut(Questions questions, login_table objUserProfile)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
@@ -102,8 +101,8 @@ namespace IPTSEOnlineExam.BLL
                 {
                     try
                     {
-                        objQuest.CandidateId = 1;
-                        objQuest.CandidateEmailId = "mk.pathak@gmail.com";
+                        objQuest.CandidateId = Convert.ToInt32(objUserProfile.Id);
+                        objQuest.CandidateEmailId = objUserProfile.email;
                         objQuest.TestXQId = questions.Id;
                         objQuest.ChoiceId = questions.selectedvalue;
                         objQuest.MarkScored = questions.markScored;
@@ -125,7 +124,7 @@ namespace IPTSEOnlineExam.BLL
             }
         }
 
-        public void SaveRemaining(Questions quest)
+        public void SaveRemaining(Questions quest, UserProfile objUserProfile)
         {
             tbl_Txn_Test_Result objQuest = new tbl_Txn_Test_Result();
             tbl_Question_Choice objQuestChoice = new tbl_Question_Choice();
@@ -137,8 +136,8 @@ namespace IPTSEOnlineExam.BLL
                 {
                     try
                     {
-                        objQuest.CandidateId = 1;
-                        objQuest.CandidateEmailId = "mk.pathak@gmail.com";
+                        objQuest.CandidateId = objUserProfile.Id;
+                        objQuest.CandidateEmailId = objUserProfile.email;
                         objQuest.TestXQId = quest.Id;
                         objQuest.ChoiceId = quest.selectedvalue;
                         objQuest.MarkScored = quest.markScored;

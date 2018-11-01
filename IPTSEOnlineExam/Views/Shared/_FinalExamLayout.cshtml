@@ -31,11 +31,41 @@
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
     </style>
-
+    <script type="text/javascript">
+            function noBack() { window.history.forward(); }
+            function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+            $(document).ready(function () {
+                $(document).on("keydown", disableF5);
+                window.history.forward(-1);
+            });
+            window.addEventListener('beforeunload', function (e) {
+                // Cancel the event as stated by the standard.
+                e.preventDefault();
+                // Chrome requires returnValue to be set.
+                e.returnValue = '';
+            });
+            function CallbackFunction(event) {
+                if (window.event) {
+                    if (window.event.clientX < 40 && window.event.clientY < 0) {
+                        alert("back button is clicked");
+                    } else {
+                        alert("refresh button is clicked");
+                    }
+                } else {
+                    if (event.currentTarget.performance.navigation.type == 2) {
+                        alert("back button is clicked");
+                    }
+                    if (event.currentTarget.performance.navigation.type == 1) {
+                        alert("refresh button is clicked");
+                    }
+                }
+            }
+    </script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body onload="noBack();"
+     onpageshow="if (event.persisted) noBack();" onunload="" onkeydown="return (event.keyCode == 154)">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="clockdiv1" class="navbar-header navbar-left navbar-brand" style="float:right;font-size:small;padding-top: 20px;" runat="server"></div>
@@ -63,37 +93,50 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-        // 10 minutes from now
-        var res1 = 10;
-        var time_in_minute1s = 45;//parseInt(res[0]);
-        // var time_in_seconds = parseInt(res[1]);
-        var current_time1 = Date.parse(new Date());
-        var deadline1 = new Date(current_time + time_in_minutes * 60 * 1000);
+        function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
-        function time_remaining(endtime) {
-            var t1 = Date.parse(endtime) - Date.parse(new Date());
-            var seconds1 = Math.floor((t1 / 1000) % 60);
-            var minutes1 = Math.floor((t1 / 1000 / 60) % 60);
-            var hours1 = Math.floor((t1 / (1000 * 60 * 60)) % 24);
-            var days1 = Math.floor(t1 / (1000 * 60 * 60 * 24));
-            return { 'total': t1, 'days': days1, 'hours': hours1, 'minutes': minutes1, 'seconds': seconds1 };
+        $(document).ready(function () {
+            $(document).on("keydown", disableF5);
+        });
+    var dt1 = '@ViewBag.EndTime';
+    var dateAr1 = dt1.split('-');
+    var newDate1 = dateAr1[1] + '/' + dateAr1[0] + '/' + dateAr1[2];
+
+    var end1 = new Date(dateAr1[1] + '/' + dateAr1[0] + '/' + dateAr1[2]);
+
+    var _second1 = 1000;
+    var _minute1 = _second1 * 60;
+    var _hour1 = _minute1 * 60;
+    var _day1 = _hour1 * 24;
+    var timer1;
+
+    function showRemaining1() {
+       var now1 = new Date();
+       var distance1 = end1 - now1;
+       if (distance1 < 0) {
+           clearInterval(timer1);
+           document.getElementById('clockdiv1').innerHTML = 'EXPIRED!';
+           window.location.href = '../Result/ResultPage';
+           return;
+       }
+    var days1 = Math.floor(distance1 / _day1);
+    var hours1 = Math.floor((distance1 % _day1) / _hour1);
+    var minutes1 = Math.floor((distance1 % _hour1) / _minute1);
+    var seconds1 = Math.floor((distance1 % _minute1) / _second1);
+        if (seconds1.toString().length < 2)
+        {
+            seconds1 = '0' + seconds1;
         }
-        function run_clock(id, endtime) {
-            var clock1 = document.getElementById(id);
-            function update_clock() {
-                var t2 = time_remaining(endtime);
-                if (t2.seconds.toString().length == 1) {
-                    clock1.innerHTML = "Total ExamTime :- " + t2.minutes + ': 0' + t2.seconds;
-                }
-                else {
-                    clock1.innerHTML = "Total ExamTime :- " + t2.minutes + ': ' + t2.seconds;
-                }
-                if (t2.total <= 0) { clearInterval(timeinterval); window.location.href = "../Result/ResultPage";}
-            }
-            update_clock(); // run function once at first to avoid delay
-            var timeinterval = setInterval(update_clock, 1000);
-        }
-        run_clock('clockdiv1', deadline);
+
+        document.getElementById('clockdiv1').innerHTML = 'Total Time Remaining :- ';
+        document.getElementById('clockdiv1').innerHTML += minutes1 + ' Mins ';
+        document.getElementById('clockdiv1').innerHTML += seconds1 + ' Secs';
+        document.getElementById('clockdiv').innerHTML = 'Total Time Remaining :- ';
+        document.getElementById('clockdiv').innerHTML += minutes1 + ' Mins ';
+        document.getElementById('clockdiv').innerHTML += seconds1 + ' Secs';
+   }
+
+    timer1 = setInterval(showRemaining1, 1000);
     </script>
 </body>
 </html>

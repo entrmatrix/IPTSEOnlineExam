@@ -51,7 +51,11 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="AdminBLL.cs" />
+    <Compile Include="FinalTestBLL.cs" />
     <Compile Include="MockTestBLL.cs" />
+    <Compile Include="Models\IPTSE_Reg_table.cs" />
+    <Compile Include="Models\login_table.cs" />
+    <Compile Include="Models\payment_details.cs" />
     <Compile Include="Models\QuestionCategory.cs" />
     <Compile Include="Models\QuestionDuration.cs" />
     <Compile Include="Models\Questions.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\TestQuestions.cs" />
     <Compile Include="Models\TestResults.cs" />
+    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
