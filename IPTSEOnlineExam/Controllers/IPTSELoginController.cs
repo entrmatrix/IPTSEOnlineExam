@@ -56,6 +56,7 @@ namespace IPTSE_portal.Controllers
                                
                 using (db)
                 {
+                    Session["TestId"] = "";
                     byte[] encode = new byte[login_table.password.Length];
                     encode = System.Text.Encoding.UTF8.GetBytes(login_table.password);
                     login_table.password = Convert.ToBase64String(encode);
@@ -83,11 +84,13 @@ namespace IPTSE_portal.Controllers
                             {
                                 var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
                                 if (insType == "School")
-                                { return RedirectToAction("Index", "Full"); }
+                                {
+                                    Session["TestId"] = 2;
+                                    return RedirectToAction("Index", "Full"); }
                                 else if (insType == "College")
-                                { return RedirectToAction("Index", "College"); }
+                                { Session["TestId"] = 3; return RedirectToAction("Index", "College"); }
                                 else
-                                { return RedirectToAction("Index", "Mock"); }
+                                { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
                             }
                             
                         }
@@ -96,11 +99,11 @@ namespace IPTSE_portal.Controllers
 
                             if (loginId == Decimal.Parse("91620195"))
                             {
-                                if (login_table.password == "YWJjQDEyMw==") //"SVBUU0VfQURNSU5fTE9HSU4 =")
-                                {
+                                //if (login_table.password == "YWJjQDEyMw==") //"SVBUU0VfQURNSU5fTE9HSU4 =")
+                                //{
                                     Session["admin_login"] = "91620195";
-                                    return RedirectToAction("Index", "Admin");
-                                }
+                                    return RedirectToAction("Index", "Question");
+                                //}
                             }
                             ViewBag.ErrorMessage = "Invalid Credentials....";
                             return View();
@@ -130,11 +133,11 @@ namespace IPTSE_portal.Controllers
                             {
                                 var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj1.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
                                 if (insType == "School")
-                                { return RedirectToAction("Index", "Full"); }
+                                { Session["TestId"] = 2; return RedirectToAction("Index", "Full"); }
                                 else if (insType == "College")
-                                { return RedirectToAction("Index", "College"); }
+                                { Session["TestId"] = 3; return RedirectToAction("Index", "College"); }
                                 else
-                                { return RedirectToAction("Index", "Mock"); }
+                                { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
                             }
                         }
                         else

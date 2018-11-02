@@ -35,17 +35,24 @@ namespace IPTSEOnlineExam.Controllers
             {
                 lstQuestions = new List<Questions>();
                 objQusetion = new Questions();
-                lstQuestions = objFinalTest.GenerateFinalQuestions(1);
-                Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
-                objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
-                ViewBag.questionNo = objQusetion.QuestNo;
-                Session["questNo"] = ViewBag.questionNo;
-                ViewBag.remainingTime = 60;
-                objQusetion.remainingTime = 60;
-                objQusetion.TotalTime = "9:59";
-                ViewBag.TotalTime = "9:59";
-                ViewBag.isSkip = false;
-                return View(objQusetion);
+                lstQuestions = objFinalTest.GenerateFinalQuestions(Convert.ToInt32(Session["TestId"]));
+                if (lstQuestions.Count > 0)
+                {
+                    Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                    objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
+                    ViewBag.questionNo = objQusetion.QuestNo;
+                    Session["questNo"] = ViewBag.questionNo;
+                    ViewBag.remainingTime = 60;
+                    objQusetion.remainingTime = 60;
+                    objQusetion.TotalTime = "9:59";
+                    ViewBag.TotalTime = "9:59";
+                    ViewBag.isSkip = false;
+                    return View(objQusetion);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "College");
+                }
             }
             else
             {
