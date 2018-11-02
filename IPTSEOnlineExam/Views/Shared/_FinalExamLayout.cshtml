@@ -38,28 +38,7 @@
                 $(document).on("keydown", disableF5);
                 window.history.forward(-1);
             });
-            window.addEventListener('beforeunload', function (e) {
-                // Cancel the event as stated by the standard.
-                e.preventDefault();
-                // Chrome requires returnValue to be set.
-                e.returnValue = '';
-            });
-            function CallbackFunction(event) {
-                if (window.event) {
-                    if (window.event.clientX < 40 && window.event.clientY < 0) {
-                        alert("back button is clicked");
-                    } else {
-                        alert("refresh button is clicked");
-                    }
-                } else {
-                    if (event.currentTarget.performance.navigation.type == 2) {
-                        alert("back button is clicked");
-                    }
-                    if (event.currentTarget.performance.navigation.type == 1) {
-                        alert("refresh button is clicked");
-                    }
-                }
-            }
+          
     </script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")

@@ -71,13 +71,11 @@ namespace IPTSEOnlineExam.Controllers
         {
             if (aaa.IsskipQuestions == true && aaa.prevQuestions == false)
             {
-                // return SkipQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
-                return RedirectToAction("CollegeTest", "College");
+                return SkipQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
             }
             else if (aaa.IsskipQuestions == false && aaa.prevQuestions == true)
             {
-                //   return PrevQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
-                return RedirectToAction("CollegeTest", "College");
+                return PrevQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
             }
             else
             {
