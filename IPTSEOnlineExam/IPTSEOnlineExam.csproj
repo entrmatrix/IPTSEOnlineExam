@@ -265,10 +265,10 @@
     <Content Include="Views\IPTSELogin\Login_Old.cshtml" />
     <Content Include="Views\School\Index.cshtml" />
     <Content Include="Views\School\SchoolTest.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

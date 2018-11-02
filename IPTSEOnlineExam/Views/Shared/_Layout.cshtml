@@ -31,7 +31,7 @@
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
     </style>
-   
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -39,14 +39,78 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="clockdiv1" class="navbar-header navbar-left navbar-brand" style="float:right;font-size:small;padding-top: 20px;" runat="server"></div>
+            
             <div class="navbar-header navbar-right ">
                 <img src="~/Images/logo.png" height="50" width="50" />
                 <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
-
+                @if (Session["admin_login"] != null)
+                {
+                    <span style="color: white">Hello @Session["admin_login"] | @Html.ActionLink("Logout", "Logout", "Admin")</span>
+                }
             </div>
+            </div>
+
         </div>
     </div>
-    <div class="container body-content">
+    @if (Session["admin_login"] != null)
+    {
+
+        <div class="navbar navbar-inverse" style=" width: 140px; position: fixed; border-radius: 0; height: 100%;">
+            <a class="navbar-brand" href="/Admin/Index">ADMIN SITE</a>
+
+            <ul class="nav navbar-nav">
+                @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADMIN <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Index", "Index", "Admin")</li>
+                            <li class="divider"></li>
+                            <li> @Html.ActionLink("Create", "Create", "Admin")</li>
+                            <li class="divider" style="background-color: white"></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">CANDIDATE <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Index", "Index", "Candidate")</li>
+                            <li class="divider"></li>
+                            <li> @Html.ActionLink("Create", "Create", "Candidate")</li>
+
+                        </ul>
+                    </li>*@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">EXAM <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("List", "Index", "Exam")</li>
+                        <li class="divider"></li>
+                        <li> @Html.ActionLink("Create", "Create", "Exam")</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">QUESTION <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("List", "Index", "Question")</li>
+                        <li class="divider"></li>
+                        <li> @Html.ActionLink("Create", "Create", "Question")</li>
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">RESULT <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("List", "Index", "Result")</li>
+                        <li class="divider"></li>
+                        <li> @Html.ActionLink("Create", "Create", "Result")</li>
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+
+
+            </ul>
+        </div>
+    }
+    <div class="container body-content" style="margin-left :150px">
         @RenderBody()
         <footer>
             <div class="navbar navbar-inverse navbar-fixed-bottom">

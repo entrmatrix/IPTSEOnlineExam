@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IPTSEOnlineExam.BLL
 {
-    public class AdminBLL : IDisposable
+    public class AdminBLL 
     {
         public List<Test> GetExam()
         {
@@ -182,10 +182,28 @@ namespace IPTSEOnlineExam.BLL
                         }));
 
                         db.Entry(tbl_Ques).State = EntityState.Modified;
-                        foreach (var item in tbl_Ques.tbl_Question_Choice)
+
+                        tbl_Test_Question_Map map = db.tbl_Test_Question_Map.FirstOrDefault(m => m.QuestionId == ques.Id);
+
+                        //tbl_Ques.tbl_Test_Question_Map.Add(new tbl_Test_Question_Map
+                        //{
+                        //    ID = map.ID,
+                        //    IsActive = true,
+                        //    QuestionId = ques.Id,
+                        //    TestId = ques.TestId,
+                        //    CreatedBy = "Admin",
+                        //    CreatedDate = tbl_Ques.CreatedDate
+                        //});
+
+                        foreach (var item in tbl_Ques.tbl_Test_Question_Map)
                         {
+                            item.TestId = ques.TestId;
                             db.Entry(item).State = EntityState.Modified;
                         }
+
+                        foreach (var item in tbl_Ques.tbl_Question_Choice)
+                            db.Entry(item).State = EntityState.Modified;
+
                         db.SaveChanges();
                         dbcxtransaction.Commit();
                     }
@@ -201,11 +219,6 @@ namespace IPTSEOnlineExam.BLL
                     }
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

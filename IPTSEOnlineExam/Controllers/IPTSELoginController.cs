@@ -43,7 +43,7 @@ namespace IPTSE_portal.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-
+            //Session.Clear();
             return View();
         }
 
@@ -102,7 +102,7 @@ namespace IPTSE_portal.Controllers
                                 //if (login_table.password == "YWJjQDEyMw==") //"SVBUU0VfQURNSU5fTE9HSU4 =")
                                 //{
                                     Session["admin_login"] = "91620195";
-                                    return RedirectToAction("Index", "Question");
+                                    return RedirectToAction("Index", "Admin");
                                 //}
                             }
                             ViewBag.ErrorMessage = "Invalid Credentials....";
@@ -147,7 +147,7 @@ namespace IPTSE_portal.Controllers
                                 if (login_table.password == "SVBUU0VfQURNSU5fTE9HSU4=")
                                 {
                                     Session["admin_login"] = "91620195";
-                                    return RedirectToAction("Index", "Question");
+                                    return RedirectToAction("Index", "Admin");
                                 }
                             }
                             ViewBag.ErrorMessage = "Invalid Credentials....";
