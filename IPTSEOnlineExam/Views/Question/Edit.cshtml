@@ -5,99 +5,109 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-     ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit";
 }
 <style>
     input, select, textarea {
         max-width: 375px;
     }
-
 </style>
-<h3>Edit Question Screen</h3>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-<div class="form-horizontal">
-    <h4>
-        @Html.Label("Question Number")
-        @Html.DisplayFor(model => model.Id)
-    </h4>
-        @Html.Label("Active")
-        @Html.EditorFor(model => model.IsActive)
-    
-    <hr />
-    @Html.ValidationSummary(true)
-    @Html.HiddenFor(model => model.Id)
-    
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.admin_id, "admin_id", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("admin_id", String.Empty)
-                @Html.ValidationMessageFor(model => model.admin_id)
-            </div>
-        </div>*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("TestId", ViewBag.exam_id as SelectList, new {@class = "form-control" })
-            @Html.ValidationMessageFor(model => model.TestId)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.QuestionCategoryId)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.QuestionText, new { @width = 500, @class = "form-control input-sm" })
-            @Html.ValidationMessageFor(model => model.QuestionText)
-        </div>
-    </div>
-    @if (Model.questionsChoice != null)
-    {
-        for (int i = 0; i < Model.questionsChoice.Count; i++)
-        {
-            <div class="form-group">
-                @Html.Label(string.Format("Choice {0}", (i + 1).ToString()), new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                @Html.TextAreaFor(model => Model.questionsChoice[i].ChoiceText, new { @class = "form-control input-sm" })
-                            </td>
-                            <td>
-                                @Html.Label("Correct Answer")
-                                @Html.EditorFor(model => Model.questionsChoice[i].IsAnswer, new { id = "A" + Model.questionsChoice[i].Id, @class = "form-control input-sm" })
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                @Html.Label("Active")
-                                @Html.EditorFor(model => Model.questionsChoice[i].IsActive, new { @class = "form-control input-sm" })
-                                @Html.ValidationMessageFor(model => model.Id)
-                                @Html.HiddenFor(model => Model.questionsChoice[i].Question_Id)
-                                @Html.HiddenFor(model => Model.questionsChoice[i].Id)
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        }
-    }
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-info btn-block" />
-        </div>
-    </div>
-</div>
-}
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<div class="text-center">
+    <h3>Edit Question Screen</h3>
+    <hr/>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id, "Question Number", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Id, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, "Is Question Active", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+            </div>
+        </div>
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.admin_id, "admin_id", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("admin_id", String.Empty)
+                    @Html.ValidationMessageFor(model => model.admin_id)
+                </div>
+            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestId, "Select Exam", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TestId", ViewBag.exam_id as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TestId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionCategoryId, "Question Category", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("QuestionCategoryId", ViewBag.category_id as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.QuestionCategoryId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.QuestionText, new { @width = 500, @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.QuestionText)
+            </div>
+        </div>
+        @if (Model.questionsChoice != null)
+        {
+            for (int i = 0; i < Model.questionsChoice.Count; i++)
+            {
+                <div class="form-group">
+                    @Html.Label(string.Format("Choice {0}", (i + 1).ToString()), new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td>
+                                    @Html.TextAreaFor(model => Model.questionsChoice[i].ChoiceText, new { @class = "form-control input-sm" })
+                                </td>
+                                <td>
+                                    @Html.Label("Correct Answer")
+                                    @Html.EditorFor(model => Model.questionsChoice[i].IsAnswer, new { id = "A" + Model.questionsChoice[i].Id, @class = "form-control input-sm" })
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @Html.Label("Active")
+                                    @Html.EditorFor(model => Model.questionsChoice[i].IsActive, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Id)
+                                    @Html.HiddenFor(model => Model.questionsChoice[i].Question_Id)
+                                    @Html.HiddenFor(model => Model.questionsChoice[i].Id)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            }
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-info btn-block" />
+            </div>
+        </div>
+    </div>
+}
+
+
 

@@ -39,16 +39,20 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="clockdiv1" class="navbar-header navbar-left navbar-brand" style="float:right;font-size:small;padding-top: 20px;" runat="server"></div>
-            
-            <div class="navbar-header navbar-right ">
-                <img src="~/Images/logo.png" height="50" width="50" />
-                <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
+
+            <div class="navbar-header navbar-right">
                 @if (Session["admin_login"] != null)
                 {
-                    <span style="color: white">Hello @Session["admin_login"] | @Html.ActionLink("Logout", "Logout", "Admin")</span>
+                    <div style="color: white">Hello @Session["admin_login"] | @Html.ActionLink("Logout", "Logout", "Admin")</div>
                 }
             </div>
+            <div class="navbar-header navb">
+                <img src="~/Images/logo.png" height="50" width="50" />
+                <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
+
             </div>
+
+        </div>
 
         </div>
     </div>
@@ -110,7 +114,7 @@
             </ul>
         </div>
     }
-    <div class="container body-content" style="margin-left :150px">
+    <div class="container body-content" style="margin-left :150px; margin-bottom : 70px;">
         @RenderBody()
         <footer>
             <div class="navbar navbar-inverse navbar-fixed-bottom">
