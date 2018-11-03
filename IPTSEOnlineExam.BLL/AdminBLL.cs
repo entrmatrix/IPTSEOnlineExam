@@ -30,7 +30,15 @@ namespace IPTSEOnlineExam.BLL
                 IsActive = m.IsActive,
                 QuestionText = m.QuestionText,
                 QuestionCategoryId = m.QuestionCategoryId,
-                TestId = m.tbl_Test_Question_Map.FirstOrDefault().TestId
+                TestId = m.tbl_Test_Question_Map.FirstOrDefault().TestId,
+                questionsChoice = m.tbl_Question_Choice.Select(k => new QuestionsChoice
+                {
+                    Id = k.Id,
+                    ChoiceText = k.ChoiceText,
+                    IsActive = k.IsActive,
+                    IsAnswer = k.IsAnswer,
+                    Question_Id = k.Question_Id
+                }).ToList(),
             }).ToList();//.Include(m => m.questionsChoice).ToList();//.Include(q => q.Exam_tbl);
 
         }

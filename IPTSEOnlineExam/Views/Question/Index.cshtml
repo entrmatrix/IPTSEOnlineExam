@@ -9,41 +9,55 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayName("Action")
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayName("Test Type")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.QuestionText)
         </th>
-        @*@foreach (var item in Model.Select(m => m.questionsChoice).SingleOrDefault())
+        @foreach (var item in (Model.Select(m => m.questionsChoice)).FirstOrDefault())
         {
             <th>
                 @Html.DisplayName("Choice")
             </th>
-        }*@
-        <th>
-            @Html.DisplayName("Action")
-        </th>
+        }
+
 
     </tr>
     @foreach (var item in Model.OrderByDescending(c => c.Id))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionText)
-            </td>
-            @*@foreach (var choice in item.questionsChoice)
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @if (item.TestId == 1)
             {
-                <td>
-                    @Html.DisplayFor(modelItem => choice.ChoiceText)
-                </td>
-            }*@
-
+                @Html.Label("Mock")
+            }
+            else if (item.TestId == 2)
+            {
+                @Html.Label("Full")
+            }
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionText)
+        </td>
+        @foreach (var choice in item.questionsChoice)
+        {
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                @Html.DisplayFor(modelItem => choice.ChoiceText)
             </td>
-        </tr>
+        }
+
+
+    </tr>
     }
 </table>
