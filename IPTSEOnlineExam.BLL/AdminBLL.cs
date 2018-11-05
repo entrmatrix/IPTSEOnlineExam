@@ -134,6 +134,7 @@ namespace IPTSEOnlineExam.BLL
                         question.QuestionDifficultyId = in_question.QuestionDifficultyId;
                         question.CreatedBy = "Admin";
                         question.CreatedDate = DateTime.Now;
+                        question.Points = 1;
                         db.tbl_Question.Add(question);
                         db.SaveChanges();
                         //question.Id
@@ -192,6 +193,7 @@ namespace IPTSEOnlineExam.BLL
                         tbl_Ques.QuestionCategoryId = (int)ques.QuestionCategoryId;
                         tbl_Ques.QuestionDifficultyId = ques.QuestionDifficultyId;
                         tbl_Ques.IsActive = ques.IsActive;
+                        tbl_Ques.Points = 1;
                         tbl_Ques.CreatedBy = "Admin";
                         tbl_Ques.CreatedDate = DateTime.Now;
                         ques.questionsChoice.ForEach(m => tbl_Ques.tbl_Question_Choice.Add(new tbl_Question_Choice
