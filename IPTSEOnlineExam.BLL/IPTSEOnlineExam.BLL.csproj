@@ -56,6 +56,7 @@
     <Compile Include="Models\IPTSE_Reg_table.cs" />
     <Compile Include="Models\login_table.cs" />
     <Compile Include="Models\payment_details.cs" />
+    <Compile Include="Models\QuestionDifficultyLevel.cs" />
     <Compile Include="Models\QuestionCategory.cs" />
     <Compile Include="Models\QuestionDuration.cs" />
     <Compile Include="Models\Questions.cs" />

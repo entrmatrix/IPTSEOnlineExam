@@ -75,6 +75,9 @@
     <Compile Include="tbl_Question_Choice.cs">
       <DependentUpon>OnlineExam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Question_Difficulty_Level.cs">
+      <DependentUpon>OnlineExam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Test.cs">
       <DependentUpon>OnlineExam.tt</DependentUpon>
     </Compile>

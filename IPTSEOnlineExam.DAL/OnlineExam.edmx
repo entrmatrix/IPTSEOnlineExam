@@ -16,6 +16,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="QuestionDifficultyId" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Question_Category">
           <Key>
@@ -37,6 +38,14 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Question_Difficulty_Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Difficulty_Level" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbl_Test">
           <Key>
@@ -108,6 +117,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_Question_DifficultyID">
+          <End Role="tbl_Question_Difficulty_Level" Type="Self.tbl_Question_Difficulty_Level" Multiplicity="0..1" />
+          <End Role="tbl_Question" Type="Self.tbl_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Question_Difficulty_Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Question">
+              <PropertyRef Name="QuestionDifficultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Test_Question_Map_QID">
           <End Role="tbl_Question" Type="Self.tbl_Question" Multiplicity="0..1" />
           <End Role="tbl_Test_Question_Map" Type="Self.tbl_Test_Question_Map" Multiplicity="*" />
@@ -160,6 +181,7 @@
           <EntitySet Name="tbl_Question" EntityType="Self.tbl_Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Question_Category" EntityType="Self.tbl_Question_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Question_Choice" EntityType="Self.tbl_Question_Choice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Question_Difficulty_Level" EntityType="Self.tbl_Question_Difficulty_Level" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Test" EntityType="Self.tbl_Test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Test_Question_Map" EntityType="Self.tbl_Test_Question_Map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Txn_Question_Duration_Map" EntityType="Self.tbl_Txn_Question_Duration_Map" Schema="dbo" store:Type="Tables" />
@@ -171,6 +193,10 @@
           <AssociationSet Name="FK_tbl_Question_Choice_QID" Association="Self.FK_tbl_Question_Choice_QID">
             <End Role="tbl_Question" EntitySet="tbl_Question" />
             <End Role="tbl_Question_Choice" EntitySet="tbl_Question_Choice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Question_DifficultyID" Association="Self.FK_tbl_Question_DifficultyID">
+            <End Role="tbl_Question_Difficulty_Level" EntitySet="tbl_Question_Difficulty_Level" />
+            <End Role="tbl_Question" EntitySet="tbl_Question" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Test_Question_Map_QID" Association="Self.FK_tbl_Test_Question_Map_QID">
             <End Role="tbl_Question" EntitySet="tbl_Question" />
@@ -207,6 +233,8 @@
           <NavigationProperty Name="tbl_Question_Category" Relationship="Self.FK_tbl_Question_CategoryID" FromRole="tbl_Question" ToRole="tbl_Question_Category" />
           <NavigationProperty Name="tbl_Question_Choice" Relationship="Self.FK_tbl_Question_Choice_QID" FromRole="tbl_Question" ToRole="tbl_Question_Choice" />
           <NavigationProperty Name="tbl_Test_Question_Map" Relationship="Self.FK_tbl_Test_Question_Map_QID" FromRole="tbl_Question" ToRole="tbl_Test_Question_Map" />
+          <Property Name="QuestionDifficultyId" Type="Int32" />
+          <NavigationProperty Name="tbl_Question_Difficulty_Level" Relationship="IPTSE_EXAMModel.FK_tbl_Question_DifficultyID" FromRole="tbl_Question" ToRole="tbl_Question_Difficulty_Level" />
         </EntityType>
         <EntityType Name="tbl_Question_Category">
           <Key>
@@ -388,7 +416,33 @@
             <End Role="tbl_Test_Question_Map" EntitySet="tbl_Test_Question_Map" />
             <End Role="tbl_Txn_Test_Result" EntitySet="tbl_Txn_Test_Result" />
           </AssociationSet>
+          <EntitySet Name="tbl_Question_Difficulty_Level" EntityType="IPTSE_EXAMModel.tbl_Question_Difficulty_Level" />
+          <AssociationSet Name="FK_tbl_Question_DifficultyID" Association="IPTSE_EXAMModel.FK_tbl_Question_DifficultyID">
+            <End Role="tbl_Question_Difficulty_Level" EntitySet="tbl_Question_Difficulty_Level" />
+            <End Role="tbl_Question" EntitySet="tbl_Question" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tbl_Question_Difficulty_Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Difficulty_Level" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Question" Relationship="IPTSE_EXAMModel.FK_tbl_Question_DifficultyID" FromRole="tbl_Question_Difficulty_Level" ToRole="tbl_Question" />
+        </EntityType>
+        <Association Name="FK_tbl_Question_DifficultyID">
+          <End Type="IPTSE_EXAMModel.tbl_Question_Difficulty_Level" Role="tbl_Question_Difficulty_Level" Multiplicity="0..1" />
+          <End Type="IPTSE_EXAMModel.tbl_Question" Role="tbl_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Question_Difficulty_Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Question">
+              <PropertyRef Name="QuestionDifficultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -398,6 +452,7 @@
           <EntitySetMapping Name="tbl_Question">
             <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question">
               <MappingFragment StoreEntitySet="tbl_Question">
+                <ScalarProperty Name="QuestionDifficultyId" ColumnName="QuestionDifficultyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuestionCategoryId" ColumnName="QuestionCategoryId" />
                 <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
@@ -478,6 +533,15 @@
                 <ScalarProperty Name="MarkScored" ColumnName="MarkScored" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Question_Difficulty_Level">
+            <EntityTypeMapping TypeName="IPTSE_EXAMModel.tbl_Question_Difficulty_Level">
+              <MappingFragment StoreEntitySet="tbl_Question_Difficulty_Level">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Difficulty_Level" ColumnName="Difficulty_Level" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

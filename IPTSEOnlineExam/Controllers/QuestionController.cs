@@ -43,6 +43,7 @@ namespace IPTSEOnlineExam.Controllers
             AdminBLL adminBLL = new AdminBLL();
             ViewBag.exam_id = new SelectList(adminBLL.GetExam(), "TestId", "Name");
             ViewBag.category_id = new SelectList(adminBLL.GetQuestionCategory(), "Id", "Category");
+            ViewBag.difficulty_level = new SelectList(adminBLL.GetDifficultyLevel(), "Id", "Difficulty_Level");
             return View();
         }
 
@@ -84,6 +85,7 @@ namespace IPTSEOnlineExam.Controllers
 
             ViewBag.exam_id = new SelectList(adminBLL.GetExam(), "TestId", "Name", questions_tbl.TestId);
             ViewBag.category_id = new SelectList(adminBLL.GetQuestionCategory(), "Id", "Category", questions_tbl.QuestionCategoryId);
+            ViewBag.difficulty_level = new SelectList(adminBLL.GetDifficultyLevel(), "Id", "Difficulty_Level");
             return View(questions_tbl);
         }
 
@@ -102,7 +104,7 @@ namespace IPTSEOnlineExam.Controllers
             }
             ViewBag.exam_id = new SelectList(adminBLL.GetExam(), "TestId", "Name", question.TestId);
             ViewBag.category_id = new SelectList(adminBLL.GetQuestionCategory(), "Id", "Category", question.QuestionCategoryId);
-
+            ViewBag.difficulty_level = new SelectList(adminBLL.GetDifficultyLevel(), "Id", "Difficulty_Level");
             return View(question);
 
         }
@@ -123,6 +125,7 @@ namespace IPTSEOnlineExam.Controllers
                 }
                 ViewBag.exam_id = new SelectList(adminBLL.GetExam(), "TestId", "Name", ques.TestId);
                 ViewBag.category_id = new SelectList(adminBLL.GetQuestionCategory(), "Id", "Category", ques.QuestionCategoryId);
+                ViewBag.difficulty_level = new SelectList(adminBLL.GetDifficultyLevel(), "Id", "Difficulty_Level");
                 return View(ques);
             }
             catch (Exception ex)

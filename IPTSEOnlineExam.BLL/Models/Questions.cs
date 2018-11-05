@@ -22,7 +22,7 @@ namespace IPTSEOnlineExam.BLL.Models
         public List<QuestionsChoice> questionsChoice { get; set; }
         public int QuestNo
         {
-            get;set;
+            get; set;
             //{
             //    lock (m_lock)
             //    {
@@ -42,5 +42,6 @@ namespace IPTSEOnlineExam.BLL.Models
         public int markScored { get; set; }
         public string SelectedText { get; set; }
         public bool IsskipQuestions { get; set; }
+        public int? QuestionDifficultyId { get; set; }
     }
 }

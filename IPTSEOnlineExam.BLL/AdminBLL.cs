@@ -2,6 +2,7 @@
 using IPTSEOnlineExam.Common;
 using IPTSEOnlineExam.DAL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -31,6 +32,7 @@ namespace IPTSEOnlineExam.BLL
                 QuestionText = m.QuestionText,
                 QuestionCategoryId = m.QuestionCategoryId,
                 TestId = m.tbl_Test_Question_Map.FirstOrDefault().TestId,
+                QuestionDifficultyId = m.QuestionDifficultyId,
                 questionsChoice = m.tbl_Question_Choice.Select(k => new QuestionsChoice
                 {
                     Id = k.Id,
@@ -41,6 +43,17 @@ namespace IPTSEOnlineExam.BLL
                 }).ToList(),
             }).ToList();//.Include(m => m.questionsChoice).ToList();//.Include(q => q.Exam_tbl);
 
+        }
+
+        public List<QuestionDifficultyLevel> GetDifficultyLevel()
+        {
+            IPTSE_EXAMEntities objEntities = new IPTSE_EXAMEntities();
+            return objEntities.tbl_Question_Difficulty_Level.Select(m => new QuestionDifficultyLevel
+            {
+                Description = m.Description,
+                Difficulty_Level = m.Difficulty_Level,
+                Id = m.Id
+            }).ToList();
         }
 
         public Questions GetQuestionDetails(int? id)
@@ -57,9 +70,11 @@ namespace IPTSEOnlineExam.BLL
                     return new Questions
                     {
                         Id = ques.Id,
-                        QuestionText = ques.QuestionText,
                         IsActive = ques.IsActive,
+                        QuestionText = ques.QuestionText,
                         QuestionCategoryId = ques.QuestionCategoryId,
+                        TestId = ques.tbl_Test_Question_Map.FirstOrDefault().TestId,
+                        QuestionDifficultyId = ques.QuestionDifficultyId,
                         questionsChoice = ques.tbl_Question_Choice.Select(m => new QuestionsChoice
                         {
                             Id = m.Id,
@@ -67,8 +82,7 @@ namespace IPTSEOnlineExam.BLL
                             IsActive = m.IsActive,
                             IsAnswer = m.IsAnswer,
                             Question_Id = m.Question_Id
-                        }).ToList(),
-                        TestId = ques.tbl_Test_Question_Map.Where(m => m.QuestionId == ques.Id).FirstOrDefault().TestId
+                        }).ToList()
                     };
                 }
             }
@@ -117,6 +131,7 @@ namespace IPTSEOnlineExam.BLL
                         question.IsActive = in_question.IsActive;
                         question.Points = in_question.Points;
                         question.QuestionCategoryId = (int)in_question.QuestionCategoryId;
+                        question.QuestionDifficultyId = in_question.QuestionDifficultyId;
                         question.CreatedBy = "Admin";
                         question.CreatedDate = DateTime.Now;
                         db.tbl_Question.Add(question);
@@ -175,6 +190,7 @@ namespace IPTSEOnlineExam.BLL
                         tbl_Ques.Id = ques.Id;
                         tbl_Ques.QuestionText = ques.QuestionText;
                         tbl_Ques.QuestionCategoryId = (int)ques.QuestionCategoryId;
+                        tbl_Ques.QuestionDifficultyId = ques.QuestionDifficultyId;
                         tbl_Ques.IsActive = ques.IsActive;
                         tbl_Ques.CreatedBy = "Admin";
                         tbl_Ques.CreatedDate = DateTime.Now;

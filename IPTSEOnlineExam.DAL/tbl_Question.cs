@@ -28,11 +28,13 @@ namespace IPTSEOnlineExam.DAL
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public Nullable<int> QuestionDifficultyId { get; set; }
     
         public virtual tbl_Question_Category tbl_Question_Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Question_Choice> tbl_Question_Choice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Test_Question_Map> tbl_Test_Question_Map { get; set; }
+        public virtual tbl_Question_Difficulty_Level tbl_Question_Difficulty_Level { get; set; }
     }
 }
