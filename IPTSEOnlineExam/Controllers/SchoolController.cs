@@ -24,55 +24,63 @@ namespace IPTSEOnlineExam.Controllers
         }
         public ActionResult SchoolTest()
         {
-
-            if (Session["EndDate"] == null)
+            try
             {
-                Session["EndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(45), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
-                //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
-            }
-            ViewBag.EndTime = Session["EndDate"];
 
-            FinalTestBLL objFinalTest = new FinalTestBLL();
-            if (Session["Next"] == null && Session["isTimeOut"] == null && Session["isSkip"] == null && Session["isPrev"] == null)
-            {
-                lstQuestions = new List<Questions>();
-                objQusetion = new Questions();
-                lstQuestions = objFinalTest.GenerateFinalQuestionsSchool(Convert.ToInt32(Session["TestId"]));
-                if (lstQuestions.Count > 0)
+                if (Session["EndDate"] == null)
                 {
-                Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
-                objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
-                ViewBag.questionNo = objQusetion.QuestNo;
-                Session["questNo"] = ViewBag.questionNo;
-                ViewBag.remainingTime = 60;
-                objQusetion.remainingTime = 60;
-                objQusetion.TotalTime = "9:59";
-                ViewBag.TotalTime = "9:59";
-                ViewBag.isSkip = false;
-                return View(objQusetion);
+                    Session["EndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(45), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
+                    //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
+                }
+                ViewBag.EndTime = Session["EndDate"];
+
+                FinalTestBLL objFinalTest = new FinalTestBLL();
+                if (Session["Next"] == null && Session["isTimeOut"] == null && Session["isSkip"] == null && Session["isPrev"] == null)
+                {
+                    lstQuestions = new List<Questions>();
+                    objQusetion = new Questions();
+                    lstQuestions = objFinalTest.GenerateFinalQuestionsSchool(Convert.ToInt32(Session["TestId"]));
+                    if (lstQuestions.Count > 0)
+                    {
+                        Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                        objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
+                        ViewBag.questionNo = objQusetion.QuestNo;
+                        Session["questNo"] = ViewBag.questionNo;
+                        ViewBag.remainingTime = 60;
+                        objQusetion.remainingTime = 60;
+                        objQusetion.TotalTime = "9:59";
+                        ViewBag.TotalTime = "9:59";
+                        ViewBag.isSkip = false;
+                        return View(objQusetion);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "School");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "School");
+
+                    Questions a = (Questions)Session["qData"];
+                    ViewBag.questionNo = a.QuestNo;
+                    lstQuestions = (List<Questions>)Session["Questions"];
+                    var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                    if (lstQuestionsNew.Count > 0)
+                    { ViewBag.isSkip = true; }
+                    else
+                    { ViewBag.isSkip = false; }
+                    if (Session["remainTime"] != null)
+                    {
+                        ViewBag.remainingTime = Session["remainTime"];
+                        Session["remainTime"] = null;
+                    }
+                    return View(a);
                 }
             }
-            else
+            catch(Exception ex)
             {
-
-                Questions a = (Questions)Session["qData"];
-                ViewBag.questionNo = a.QuestNo;
-                lstQuestions = (List<Questions>)Session["Questions"];
-                var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                if (lstQuestionsNew.Count > 0)
-                { ViewBag.isSkip = true; }
-                else
-                { ViewBag.isSkip = false; }
-                if (Session["remainTime"] != null)
-                {
-                    ViewBag.remainingTime = Session["remainTime"];
-                    Session["remainTime"] = null;
-                }
-                return View(a);
+                Session["ErrorMessage"] = ex;
+                return View("Index", "Error");
             }
         }
         private string Decrypt(string cipherText)
@@ -100,200 +108,216 @@ namespace IPTSEOnlineExam.Controllers
         [HttpPost]
         public ActionResult NextQuestion(Questions aaa)
         {
-            if (aaa.IsskipQuestions == true && aaa.prevQuestions == false)
+            try
             {
-                 return SkipQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
-               // return RedirectToAction("SchoolTest", "School");
-            }
-            else if (aaa.IsskipQuestions == false && aaa.prevQuestions == true)
-            {
-                 return PrevQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
-               // return RedirectToAction("SchoolTest", "School");
-            }
-            else
-            {
-                MockTestBLL objMock = new MockTestBLL();
-                if (Session["Result"] != null)
+                if (aaa.IsskipQuestions == true && aaa.prevQuestions == false)
                 {
-                    lstQuestionsForResult = (List<Questions>)Session["Result"];
+                    return SkipQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
+                    // return RedirectToAction("SchoolTest", "School");
                 }
-                Boolean isAnswer = objMock.isAnswer(aaa.selectedvalue);
-                if (isAnswer == true)
-                { aaa.markScored = 1; }
+                else if (aaa.IsskipQuestions == false && aaa.prevQuestions == true)
+                {
+                    return PrevQuestion(aaa.Id, aaa.TotalTime, aaa.skippedTime);
+                    // return RedirectToAction("SchoolTest", "School");
+                }
                 else
-                { aaa.markScored = 0; }
-                string aaa1 = ViewBag.Timedur;
-                ViewBag.questionNo = Session["questNo"];
-                lstQuestions = (List<Questions>)Session["Questions"];
-                Session["Next"] = "true";
-                var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == aaa.Id && r.skipQuestions == false);
-                if (itemToRemove != null)
                 {
-                    itemToRemove.skippedTime = Convert.ToString(60 - Convert.ToInt32(aaa.skippedTime.Substring(aaa.skippedTime.Length - 2))) + " sec";
-                    itemToRemove.SelectedText = objMock.selectedAnswer(aaa.selectedvalue);
-                    Boolean isAnswer1 = objMock.isAnswer(aaa.selectedvalue);
-                    if (isAnswer1 == true)
-                    { itemToRemove.markScored = 1; }
-                    else
-                    { itemToRemove.markScored = 0; }
-                    lstQuestionsForResult.Add(itemToRemove);
-                }
-                Session["Result"] = lstQuestionsForResult;
-                lstQuestions.RemoveAll(t => t.Id == aaa.Id && t.skipQuestions == false);
-                Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
-                if (lstQuestions.Count <= 10 && lstQuestions.Count > 0 && ViewBag.questionNo <= 10)
-                {
-                    lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
-                    if (lstQuestions.Count == 0)
+                    MockTestBLL objMock = new MockTestBLL();
+                    if (Session["Result"] != null)
                     {
-                        var lstQuestionsSkipped = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                        if (lstQuestionsSkipped.Count > 0)
+                        lstQuestionsForResult = (List<Questions>)Session["Result"];
+                    }
+                    Boolean isAnswer = objMock.isAnswer(aaa.selectedvalue);
+                    if (isAnswer == true)
+                    { aaa.markScored = 1; }
+                    else
+                    { aaa.markScored = 0; }
+                    string aaa1 = ViewBag.Timedur;
+                    ViewBag.questionNo = Session["questNo"];
+                    lstQuestions = (List<Questions>)Session["Questions"];
+                    Session["Next"] = "true";
+                    var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == aaa.Id && r.skipQuestions == false);
+                    if (itemToRemove != null)
+                    {
+                        itemToRemove.skippedTime = Convert.ToString(60 - Convert.ToInt32(aaa.skippedTime.Substring(aaa.skippedTime.Length - 2))) + " sec";
+                        itemToRemove.SelectedText = objMock.selectedAnswer(aaa.selectedvalue);
+                        Boolean isAnswer1 = objMock.isAnswer(aaa.selectedvalue);
+                        if (isAnswer1 == true)
+                        { itemToRemove.markScored = 1; }
+                        else
+                        { itemToRemove.markScored = 0; }
+                        lstQuestionsForResult.Add(itemToRemove);
+                    }
+                    Session["Result"] = lstQuestionsForResult;
+                    lstQuestions.RemoveAll(t => t.Id == aaa.Id && t.skipQuestions == false);
+                    Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                    if (lstQuestions.Count <= 36 && lstQuestions.Count > 0 && ViewBag.questionNo <= 36)
+                    {
+                        lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
+                        if (lstQuestions.Count == 0)
                         {
-                            Session["isBack"] = true;
-                            foreach (var item in lstQuestionsSkipped)
+                            var lstQuestionsSkipped = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                            if (lstQuestionsSkipped.Count > 0)
                             {
-                                lstQuestionsForResult.Add(item);
-                                Session["Result"] = lstQuestionsForResult;
-                                var spendTime1 = item.TotalTime.Substring(item.TotalTime.Length - 5);
-                                ViewBag.TotalTime = spendTime1;
-                                var spendTimeArr1 = spendTime1.Split(':');
-                                int spendSecond1 = 60 - Convert.ToInt32(spendTimeArr1[1]);
-                                item.SpendTime = spendSecond1.ToString();
-                                objUProfile = (login_table)Session["UserProfile"];
-                                objMock.SaveAnswer(item, objUProfile);
+                                Session["isBack"] = true;
+                                foreach (var item in lstQuestionsSkipped)
+                                {
+                                    lstQuestionsForResult.Add(item);
+                                    Session["Result"] = lstQuestionsForResult;
+                                    var spendTime1 = item.TotalTime.Substring(item.TotalTime.Length - 5);
+                                    ViewBag.TotalTime = spendTime1;
+                                    var spendTimeArr1 = spendTime1.Split(':');
+                                    int spendSecond1 = 60 - Convert.ToInt32(spendTimeArr1[1]);
+                                    item.SpendTime = spendSecond1.ToString();
+                                    objUProfile = (login_table)Session["UserProfile"];
+                                    objMock.SaveAnswer(item, objUProfile);
+                                }
                             }
+                            else
+                            { Session["isBack"] = false; }
+
+
+                            ViewData["success_msg"] = "Congratulation! you have successfully completed your School Test.";
+                            return RedirectToAction("Index", "Result");
+                            //return RedirectToAction("SchoolTest", "School");
                         }
                         else
-                        { Session["isBack"] = false; }
-
-
-                        ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
-                        //return RedirectToAction("ResultPage", "Result");
-                        return RedirectToAction("SchoolTest", "School");
+                        {
+                            //ViewBag.isSkip = true;
+                            var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                            if (lstQuestionsNew.Count > 0)
+                            { Session["isBack"] = true; }
+                            else
+                            { Session["isBack"] = false; }
+                            objQusetion = new Questions();
+                            objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
+                            var spendTime = aaa.TotalTime.Substring(aaa.TotalTime.Length - 15);
+                            objQusetion.TotalTime = spendTime;
+                            objQusetion.remainingTime = 60;
+                            Session["qData"] = objQusetion;
+                            Session["questNo"] = objQusetion.QuestNo;
+                            ViewBag.remainingTime = 60;
+                            Session["remainTime"] = 60;
+                            int spendSecond = 60 - Convert.ToInt32(aaa.TotalTime.Substring(31, 2));
+                            aaa.SpendTime = spendSecond.ToString();
+                            objUProfile = (login_table)Session["UserProfile"];
+                            objMock.SaveAnswer(aaa, objUProfile);
+                            return RedirectToAction("SchoolTest", "School");
+                        }
                     }
                     else
                     {
-                        //ViewBag.isSkip = true;
-                        var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                        if (lstQuestionsNew.Count > 0)
-                        { Session["isBack"] = true; }
-                        else
-                        { Session["isBack"] = false; }
-                        objQusetion = new Questions();
-                        objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
-                        var spendTime = aaa.TotalTime.Substring(aaa.TotalTime.Length - 15);
-                        objQusetion.TotalTime = spendTime;
-                        objQusetion.remainingTime = 60;
-                        Session["qData"] = objQusetion;
-                        Session["questNo"] = objQusetion.QuestNo;
-                        ViewBag.remainingTime = 60;
-                        Session["remainTime"] = 60;
-                        int spendSecond = 60 - Convert.ToInt32(aaa.TotalTime.Substring(31, 2));
-                        aaa.SpendTime = spendSecond.ToString();
-                        objUProfile = (login_table)Session["UserProfile"];
-                        objMock.SaveAnswer(aaa, objUProfile);
-                        return RedirectToAction("SchoolTest", "School");
+                        ViewData["success_msg"] = "Congratulation! you have successfully completed your School Test.";
+                         return RedirectToAction("Index", "Result");
+                        //return RedirectToAction("SchoolTest", "School");
                     }
                 }
-                else
-                {
-                    ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
-                    // return RedirectToAction("ResultPage", "Result");
-                    return RedirectToAction("SchoolTest", "School");
-                }
+            }
+            catch (Exception ex)
+            {
+                Session["ErrorMessage"] = ex;
+                return View("Index", "Error");
             }
         }
         [HttpPost]
         public ActionResult NextQuestionTimeOut(int QuestId, string TotalTime, string skippedTime)
         {
-            MockTestBLL objMock = new MockTestBLL();
-            // lstQuestionsForResult = new List<Questions>();
-            if (Session["Result"] != null)
+            try
             {
-                lstQuestionsForResult = (List<Questions>)Session["Result"];
-            }
-            //Boolean isAnswer = objMock.isAnswer(aaa.selectedvalue);
-            //if (isAnswer == true)
-            //{ aaa.markScored = 1; }
-            //else
-            //{ aaa.markScored = 0; }
-
-            ViewBag.questionNo = Session["questNo"];
-            lstQuestions = (List<Questions>)Session["Questions"];
-            if (lstQuestions != null)
-            {
-                Session["Next"] = "true";
-                var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == Convert.ToInt32(QuestId) && r.skipQuestions == false);
-                if (itemToRemove != null)
+                MockTestBLL objMock = new MockTestBLL();
+                // lstQuestionsForResult = new List<Questions>();
+                if (Session["Result"] != null)
                 {
-                    itemToRemove.skippedTime = Convert.ToString("0");// Convert.ToString(60 - Convert.ToInt32(questionsTimeOut.skippedTime.Substring(questionsTimeOut.skippedTime.Length - 2)));
-                    itemToRemove.SelectedText = "";//objMock.selectedAnswer(questionsTimeOut.selectedvalue);
-                                                   //Boolean isAnswer1 = objMock.isAnswer(questionsTimeOut.selectedvalue);
-                    itemToRemove.markScored = 0;
-                    lstQuestionsForResult.Add(itemToRemove);
+                    lstQuestionsForResult = (List<Questions>)Session["Result"];
                 }
-                Session["Result"] = lstQuestionsForResult;
-                lstQuestions.RemoveAll(t => t.Id == Convert.ToInt32(QuestId) && t.skipQuestions == false);
-                Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
-                if (lstQuestions.Count <= 10 && lstQuestions.Count > 0 && ViewBag.questionNo <= 10)
+                //Boolean isAnswer = objMock.isAnswer(aaa.selectedvalue);
+                //if (isAnswer == true)
+                //{ aaa.markScored = 1; }
+                //else
+                //{ aaa.markScored = 0; }
+
+                ViewBag.questionNo = Session["questNo"];
+                lstQuestions = (List<Questions>)Session["Questions"];
+                if (lstQuestions != null)
                 {
-                    lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
-                    if (lstQuestions.Count == 0)
+                    Session["Next"] = "true";
+                    var itemToRemove = lstQuestions.SingleOrDefault(r => r.Id == Convert.ToInt32(QuestId) && r.skipQuestions == false);
+                    if (itemToRemove != null)
                     {
-                        var lstQuestionsSkipped = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                        if (lstQuestionsSkipped.Count > 0)
+                        itemToRemove.skippedTime = Convert.ToString("0");// Convert.ToString(60 - Convert.ToInt32(questionsTimeOut.skippedTime.Substring(questionsTimeOut.skippedTime.Length - 2)));
+                        itemToRemove.SelectedText = "";//objMock.selectedAnswer(questionsTimeOut.selectedvalue);
+                                                       //Boolean isAnswer1 = objMock.isAnswer(questionsTimeOut.selectedvalue);
+                        itemToRemove.markScored = 0;
+                        lstQuestionsForResult.Add(itemToRemove);
+                    }
+                    Session["Result"] = lstQuestionsForResult;
+                    lstQuestions.RemoveAll(t => t.Id == Convert.ToInt32(QuestId) && t.skipQuestions == false);
+                    Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                    if (lstQuestions.Count <= 36 && lstQuestions.Count > 0 && ViewBag.questionNo <= 36)
+                    {
+                        lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
+                        if (lstQuestions.Count == 0)
                         {
-                            Session["isBack"] = true;
-                            foreach (var item in lstQuestionsSkipped)
+                            var lstQuestionsSkipped = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                            if (lstQuestionsSkipped.Count > 0)
                             {
-                                lstQuestionsForResult.Add(item);
-                                Session["Result"] = lstQuestionsForResult;
-                                var spendTime1 = item.TotalTime.Substring(item.TotalTime.Length - 4);
-                                var spendTimeArr1 = spendTime1.Split(':');
-                                int spendSecond1 = 60 - Convert.ToInt32(spendTimeArr1[1]);
-                                item.SpendTime = spendSecond1.ToString();
-                                objUProfile = (login_table)Session["UserProfile"];
-                                objMock.SaveAnswer(item, objUProfile);
+                                Session["isBack"] = true;
+                                foreach (var item in lstQuestionsSkipped)
+                                {
+                                    lstQuestionsForResult.Add(item);
+                                    Session["Result"] = lstQuestionsForResult;
+                                    var spendTime1 = item.TotalTime.Substring(item.TotalTime.Length - 4);
+                                    var spendTimeArr1 = spendTime1.Split(':');
+                                    int spendSecond1 = 60 - Convert.ToInt32(spendTimeArr1[1]);
+                                    item.SpendTime = spendSecond1.ToString();
+                                    objUProfile = (login_table)Session["UserProfile"];
+                                    objMock.SaveAnswer(item, objUProfile);
+                                }
                             }
+                            else
+                            { Session["isBack"] = false; }
+
+
+                            ViewData["success_msg"] = "Congratulation! you have successfully completed your School Test.";
+                            return RedirectToAction("Index", "Result");
                         }
                         else
-                        { Session["isBack"] = false; }
-
-
-                        ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
-                        return Json(new { success = true, responseText = "Exam Complete!" }, JsonRequestBehavior.AllowGet);
+                        {
+                            var lstQuestNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                            if (lstQuestNew.Count > 0)
+                            { Session["isBack"] = true; }
+                            else
+                            { Session["isBack"] = false; }
+                            objQusetion = new Questions();
+                            objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
+                            objQusetion.remainingTime = 60;
+                            var spendTime = TotalTime.Substring(TotalTime.Length - 15);
+                            objQusetion.TotalTime = spendTime;
+                            objQusetion.remainingTime = 60;
+                            Session["qData"] = objQusetion;
+                            Session["questNo"] = objQusetion.QuestNo;
+                            ViewBag.remainingTime = 60;
+                            Session["remainTime"] = 60;
+                            // int spendSecond = 60 - Convert.ToInt32(aaa.TotalTime.Substring(31, 2));
+                            //  aaa.SpendTime = spendSecond.ToString();
+                            objUProfile = (login_table)Session["UserProfile"];
+                            objMock.SaveAnswerTimeOut(objQusetion, objUProfile);
+                            return RedirectToAction("SchoolTest", "School");
+                        }
                     }
                     else
                     {
-                        var lstQuestNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                        if (lstQuestNew.Count > 0)
-                        { Session["isBack"] = true; }
-                        else
-                        { Session["isBack"] = false; }
-                        objQusetion = new Questions();
-                        objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
-                        objQusetion.remainingTime = 60;
-                        var spendTime = TotalTime.Substring(TotalTime.Length - 15);
-                        objQusetion.TotalTime = spendTime;
-                        objQusetion.remainingTime = 60;
-                        Session["qData"] = objQusetion;
-                        Session["questNo"] = objQusetion.QuestNo;
-                        ViewBag.remainingTime = 60;
-                        Session["remainTime"] = 60;
-                        // int spendSecond = 60 - Convert.ToInt32(aaa.TotalTime.Substring(31, 2));
-                        //  aaa.SpendTime = spendSecond.ToString();
-                        objUProfile = (login_table)Session["UserProfile"];
-                        objMock.SaveAnswerTimeOut(objQusetion, objUProfile);
-                        return RedirectToAction("SchoolTest", "School");
+                        ViewData["success_msg"] = "Congratulation! you have successfully completed your School Test.";
+                        return RedirectToAction("Index", "Result");
                     }
                 }
-                else
-                {
-                    ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
-                    return Json(new { success = true, responseText = "Exam Complete!" }, JsonRequestBehavior.AllowGet);
-                }
+                return RedirectToAction("SchoolTest", "School");
             }
-            return RedirectToAction("SchoolTest", "School");
+            catch (Exception ex)
+            {
+                Session["ErrorMessage"] = ex;
+                return View("Index", "Error");
+            }
         }
         [HttpPost]
         public ActionResult SkipQuestion(int QuestId, string TotalTime, string skippedTime)

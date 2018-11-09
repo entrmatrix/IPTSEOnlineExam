@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" language="javascript">
+        function goBack() {
+            history.go(-1);
+            return false;
+        }
+</script>
+<div id="wrapper" class="bg-gray" style="font-family: 'omnes-pro',sans-serif; font-size: 15px;
+        font-weight: 500; margin-top:52px;">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-7">
+            <h4 style="color: #ff0000;" align="Center">@ViewBag.ErrorMessage</h4>
+        </div>
+    </div>
+    <table style="padding-left: 5px; padding-top: 30px;">
+        <tr>
+            <td width="325px">
+                <asp:Image ID="imgCryBaby" runat="server" ImageUrl="~/Images/crybaby.jpg" />
+            </td>
+            <td valign="top">
+                <asp:Panel ID="pnlErrorMsg" runat="server" Style="font-size: large; padding-left: 5px;">
+                    <asp:Label ID="lblError" runat="server" Text="Ugh... An unexpected error occurred in the application." />
+                    <br />
+                    <br />
+                    <asp:Label ID="accountErrorLbl" runat="server" Visible="false" Text="<br>There is an issue with your account."></asp:Label>
+                    Please contact us at <a style="color: blue;" href="mailto:IPTSE@enquiry@iptse.com">IPTSE@enquiry@iptse.com</a>
+                    or, you can click <a style="color: blue;" href="javascript:goBack();">here</a> to
+                    go back to the Previous Page.
+                    <br />
+                    <br />
+                    Thank you for your patience.
+                    <br />
+                </asp:Panel>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
