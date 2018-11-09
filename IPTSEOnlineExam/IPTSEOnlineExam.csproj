@@ -204,7 +204,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\fonts.css" />
     <Content Include="Content\Gridmvc.css" />
+    <Content Include="Content\responsive.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -249,13 +253,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Mock\Index.cshtml" />
     <Content Include="Views\Mock\MockTest.cshtml" />
-    <Content Include="Views\Final\FullTest.cshtml" />
     <Content Include="Views\Result\ResultPage.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Shared\_ExamLayout.cshtml" />
-    <Content Include="Views\Final\Index.cshtml" />
     <Content Include="Views\Shared\_FinalExamLayout.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />

@@ -35,7 +35,7 @@ namespace IPTSEOnlineExam.Controllers
             {
                 lstQuestions = new List<Questions>();
                 objQusetion = new Questions();
-                lstQuestions = objFinalTest.GenerateFinalQuestions(Convert.ToInt32(Session["TestId"]));
+                lstQuestions = objFinalTest.GenerateFinalQuestionsCollege(Convert.ToInt32(Session["TestId"]));
                 if (lstQuestions.Count > 0)
                 {
                     Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();

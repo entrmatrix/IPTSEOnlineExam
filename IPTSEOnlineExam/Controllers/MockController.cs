@@ -29,51 +29,58 @@ namespace IPTSEOnlineExam.Controllers
 
         public ActionResult MockTest()
         {
-            if (Session["EndDate"] == null)
+            try
             {
-                Session["EndDate"]= TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(10), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
-                //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
-            }
-            ViewBag.EndTime = Session["EndDate"];
-            if (Session["QuestionEndDate"] == null)
-            {
-                Session["QuestionEndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(1), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
-                //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
-            }
-            ViewBag.QuestionEndDate = Session["QuestionEndDate"];
-            MockTestBLL objMockTest = new MockTestBLL();
-            if (Session["Next"] == null && Session["isTimeOut"] == null && Session["isSkip"] == null && Session["isPrev"] == null)
-            {
-                lstQuestions = new List<Questions>();
-                objQusetion = new Questions();
-                lstQuestions = objMockTest.GenerateQuestions();
-                Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
-                objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
-                ViewBag.questionNo = objQusetion.QuestNo;
-                Session["questNo"] = ViewBag.questionNo;
-                objQusetion.remainingTime = Session["QuestionEndDate"];
-                objQusetion.TotalTime = "9:59";
-                ViewBag.TotalTime = "9:59";
-                ViewBag.isSkip = false;
-                return View(objQusetion);
-            }
-            else
-            {
-
-                Questions a = (Questions)Session["qData"];
-                ViewBag.questionNo = a.QuestNo;
-                lstQuestions = (List<Questions>)Session["Questions"];
-                var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
-                if (lstQuestionsNew.Count > 0)
-                { ViewBag.isSkip = true; }
-                else
-                { ViewBag.isSkip = false; }
-                if (Session["remainTime"] != null)
+                if (Session["EndDate"] == null)
                 {
-                    ViewBag.remainingTime = Session["remainTime"];
-                    Session["remainTime"] = null;
+                    Session["EndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(10), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
+                    //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
                 }
-                return View(a);
+                ViewBag.EndTime = Session["EndDate"];
+                if (Session["QuestionEndDate"] == null)
+                {
+                    Session["QuestionEndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(1), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
+                    //Session["EndDate"] = DateTime.Now.AddMinutes(10).ToString("dd-MM-yyyy h:mm:ss tt").ToString(CultureInfo.InvariantCulture);
+                }
+                ViewBag.QuestionEndDate = Session["QuestionEndDate"];
+                MockTestBLL objMockTest = new MockTestBLL();
+                if (Session["Next"] == null && Session["isTimeOut"] == null && Session["isSkip"] == null && Session["isPrev"] == null)
+                {
+                    lstQuestions = new List<Questions>();
+                    objQusetion = new Questions();
+                    lstQuestions = objMockTest.GenerateQuestions();
+                    Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                    objQusetion = lstQuestions.Select(t => t).FirstOrDefault();
+                    ViewBag.questionNo = objQusetion.QuestNo;
+                    Session["questNo"] = ViewBag.questionNo;
+                    objQusetion.remainingTime = Session["QuestionEndDate"];
+                    objQusetion.TotalTime = "9:59";
+                    ViewBag.TotalTime = "9:59";
+                    ViewBag.isSkip = false;
+                    return View(objQusetion);
+                }
+                else
+                {
+
+                    Questions a = (Questions)Session["qData"];
+                    ViewBag.questionNo = a.QuestNo;
+                    lstQuestions = (List<Questions>)Session["Questions"];
+                    var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
+                    if (lstQuestionsNew.Count > 0)
+                    { ViewBag.isSkip = true; }
+                    else
+                    { ViewBag.isSkip = false; }
+                    if (Session["remainTime"] != null)
+                    {
+                        ViewBag.remainingTime = Session["remainTime"];
+                        Session["remainTime"] = null;
+                    }
+                    return View(a);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View();
             }
         }
         [HttpPost]

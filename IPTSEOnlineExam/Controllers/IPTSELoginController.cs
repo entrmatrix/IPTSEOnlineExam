@@ -88,7 +88,7 @@ namespace IPTSE_portal.Controllers
                                     Session["TestId"] = 2;
                                     return RedirectToAction("Index", "Full"); }
                                 else if (insType == "College")
-                                { Session["TestId"] = 3; return RedirectToAction("Index", "College"); }
+                                { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
                                 else
                                 { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
                             }
@@ -135,7 +135,7 @@ namespace IPTSE_portal.Controllers
                                 if (insType == "School")
                                 { Session["TestId"] = 2; return RedirectToAction("Index", "Full"); }
                                 else if (insType == "College")
-                                { Session["TestId"] = 3; return RedirectToAction("Index", "College"); }
+                                { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
                                 else
                                 { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
                             }

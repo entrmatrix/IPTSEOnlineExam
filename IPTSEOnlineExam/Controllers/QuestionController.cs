@@ -16,6 +16,10 @@ namespace IPTSEOnlineExam.Controllers
         // GET: MockTest
         public ActionResult Index()
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             AdminBLL adminBLL = new AdminBLL();
             return View(adminBLL.GetQuestions());
         }
@@ -23,6 +27,10 @@ namespace IPTSEOnlineExam.Controllers
         // GET: MockTest/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,6 +48,10 @@ namespace IPTSEOnlineExam.Controllers
         // GET: MockTest/Create
         public ActionResult Create()
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             AdminBLL adminBLL = new AdminBLL();
             ViewBag.exam_id = new SelectList(adminBLL.GetExam(), "TestId", "Name");
             ViewBag.category_id = new SelectList(adminBLL.GetQuestionCategory(), "Id", "Category");
@@ -51,6 +63,10 @@ namespace IPTSEOnlineExam.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Questions questions_tbl)
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             AdminBLL adminBLL = new AdminBLL();
             if (ModelState.IsValid)
             {
@@ -92,6 +108,10 @@ namespace IPTSEOnlineExam.Controllers
         // GET: MockTest/Edit/5
         public ActionResult Edit(int id)
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -114,6 +134,10 @@ namespace IPTSEOnlineExam.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Questions ques)
         {
+            if (Session["admin_login"] == null)
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
             AdminBLL adminBLL = new AdminBLL();
             try
             {

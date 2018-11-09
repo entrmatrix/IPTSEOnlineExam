@@ -41,20 +41,28 @@
             <div id="clockdiv1" class="navbar-header navbar-left navbar-brand" style="float:right;font-size:small;padding-top: 20px;" runat="server"></div>
 
             <div class="navbar-header navbar-right">
-                @if (Session["admin_login"] != null)
-                {
-                    <div style="color: white">Hello @Session["admin_login"] | @Html.ActionLink("Logout", "Logout", "Admin")</div>
-                }
-            </div>
-            <div class="navbar-header navb">
-                <img src="~/Images/logo.png" height="50" width="50" />
-                <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
 
+            </div>
+            <div class="navbar-header navbar-right">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="~/Images/logo.png" height="50" width="50" />
+                            <div class="navbar-brand">Intellectual Property Talent Search Examination</div>
+                        </td>
+                        <td>
+                            @if (Session["admin_login"] != null)
+                            {
+                                <div style="color: white; padding-left:10px;">Hello @Session["admin_login"] | @Html.ActionLink("Logout", "Logout", "Admin", new { @style = "color: white;" })</div>
+                            }
+                        </td>
+                    </tr>
+                </table>
             </div>
 
         </div>
 
-        </div>
+    </div>
     </div>
     @if (Session["admin_login"] != null)
     {
