@@ -86,7 +86,7 @@ namespace IPTSE_portal.Controllers
                                 if (insType == "School")
                                 {
                                     Session["TestId"] = 2;
-                                    return RedirectToAction("Index", "Full"); }
+                                    return RedirectToAction("Index", "School"); }
                                 else if (insType == "College")
                                 { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
                                 else

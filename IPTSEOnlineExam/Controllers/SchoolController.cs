@@ -80,7 +80,7 @@ namespace IPTSEOnlineExam.Controllers
             catch(Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         private string Decrypt(string cipherText)
@@ -216,7 +216,7 @@ namespace IPTSEOnlineExam.Controllers
             catch (Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]
@@ -316,7 +316,7 @@ namespace IPTSEOnlineExam.Controllers
             catch (Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]

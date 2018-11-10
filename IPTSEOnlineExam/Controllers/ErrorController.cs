@@ -13,16 +13,16 @@ namespace IPTSEOnlineExam.Controllers
         // GET: Error
         public ActionResult Index()
         {
-            if(Session["ErrorMessage"]!=null)
+            if (Session["ErrorMessage"] != null)
             {
-                Exception ex =(Exception)Session["ErrorMessage"];
+                Exception ex = (Exception)Session["ErrorMessage"];
                 sendMail(ex);
             }
             return View();
         }
         private void sendMail(Exception ex)
         {
-            string smsg = ex.InnerException.ToString();
+            string smsg = ex.InnerException != null ? ex.InnerException.ToString() : "";
             smsg += "<br/><br/>" + ex.StackTrace.ToString();
             try
             {

@@ -24,7 +24,6 @@ namespace IPTSEOnlineExam.Controllers
         {
             try
             {
-
                 if (Session["EndDate"] == null)
                 {
                     Session["EndDate"] = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(60), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd-MM-yyyy h:mm:ss tt");
@@ -78,7 +77,7 @@ namespace IPTSEOnlineExam.Controllers
             catch (Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]
@@ -190,7 +189,7 @@ namespace IPTSEOnlineExam.Controllers
             catch (Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]
@@ -290,7 +289,7 @@ namespace IPTSEOnlineExam.Controllers
             catch (Exception ex)
             {
                 Session["ErrorMessage"] = ex;
-                return View("Index", "Error");
+                return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]

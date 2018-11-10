@@ -271,6 +271,7 @@
     <Content Include="Views\School\SchoolTest.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
