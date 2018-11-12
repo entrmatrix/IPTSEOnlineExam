@@ -15,6 +15,8 @@ namespace IPTSEOnlineExam.Controllers
         List<Questions> lstQuestionsForResult = new List<Questions>();
         Questions objQusetion;
         login_table objUProfile = new login_table();
+        UserExamCompletion objExamCompletion;
+        FinalTestBLL objFinalTest = new FinalTestBLL();
         // GET: College
         public ActionResult Index()
         {
@@ -149,7 +151,11 @@ namespace IPTSEOnlineExam.Controllers
                             else
                             { Session["isBack"] = false; }
 
-
+                            objUProfile = (login_table)Session["UserProfile"];
+                            objExamCompletion = new UserExamCompletion();
+                            objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+                            objExamCompletion.IsExamCompleted = true;
+                            objFinalTest.IsExamCompletion(objExamCompletion);
                             ViewData["success_msg"] = "Congratulation! you have successfully completed your Mock Test.";
                             return RedirectToAction("Index", "Result");
                             //return RedirectToAction("CollegeTest", "College");
@@ -180,6 +186,11 @@ namespace IPTSEOnlineExam.Controllers
                     }
                     else
                     {
+                        objUProfile = (login_table)Session["UserProfile"];
+                        objExamCompletion = new UserExamCompletion();
+                        objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+                        objExamCompletion.IsExamCompleted = true;
+                        objFinalTest.IsExamCompletion(objExamCompletion);
                         ViewData["success_msg"] = "Congratulation! you have successfully completed your Test.";
                          return RedirectToAction("Index", "Result");
                         //return RedirectToAction("CollegeTest", "College");
@@ -250,7 +261,11 @@ namespace IPTSEOnlineExam.Controllers
                             else
                             { Session["isBack"] = false; }
 
-
+                            objUProfile = (login_table)Session["UserProfile"];
+                            objExamCompletion = new UserExamCompletion();
+                            objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+                            objExamCompletion.IsExamCompleted = true;
+                            objFinalTest.IsExamCompletion(objExamCompletion);
                             ViewData["success_msg"] = "Congratulation! you have successfully completed your College Test.";
                             return RedirectToAction("Index", "Result");
                         }
@@ -280,6 +295,11 @@ namespace IPTSEOnlineExam.Controllers
                     }
                     else
                     {
+                        objUProfile = (login_table)Session["UserProfile"];
+                        objExamCompletion = new UserExamCompletion();
+                        objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+                        objExamCompletion.IsExamCompleted = true;
+                        objFinalTest.IsExamCompletion(objExamCompletion);
                         ViewData["success_msg"] = "Congratulation! you have successfully completed your College Test.";
                         return RedirectToAction("Index", "Result");
                     }

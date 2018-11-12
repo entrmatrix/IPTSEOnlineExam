@@ -64,6 +64,7 @@
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\TestQuestions.cs" />
     <Compile Include="Models\TestResults.cs" />
+    <Compile Include="Models\UserExamCompletion.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

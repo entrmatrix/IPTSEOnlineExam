@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text;
 using IPTSEOnlineExam.BLL.Models;
+using IPTSEOnlineExam.BLL;
 
 namespace IPTSE_portal.Controllers
 {
@@ -51,114 +52,143 @@ namespace IPTSE_portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(login_table login_table)
         {
-            if (ModelState.IsValid)
+            try
             {
-                               
-                using (db)
+                if (ModelState.IsValid)
                 {
-                    Session["TestId"] = "";
-                    byte[] encode = new byte[login_table.password.Length];
-                    encode = System.Text.Encoding.UTF8.GetBytes(login_table.password);
-                    login_table.password = Convert.ToBase64String(encode);
-                    bool allDigits = login_table.email.All(char.IsDigit);
-                    if(allDigits)
-                    {
-                        var loginId = Int32.Parse(login_table.email);
-                        var obj = db.login_table.Where(a => a.Id.Equals(loginId) && a.password.Equals(login_table.password)).FirstOrDefault();
-                        if (obj != null)
-                        {
-                            Session["id"] = obj.Id.ToString();
-                            Session["UserProfile"] = obj;
-                            ViewBag.UID = HttpUtility.UrlEncode(Encrypt(obj.Id.ToString()));
-                            Session["Type"] = obj.Login_type;
-                            payment_details payment_Details = new payment_details();
-                            payment_Details.Id = Decimal.Parse(Session["id"].ToString());
-                            var objPayment = pDB.payment_details.Where(a => a.Id.Equals(payment_Details.Id)).FirstOrDefault();
-                            if (objPayment == null)
-                            {
 
-                                ViewBag.PaymentMessage = "Payment";
-                                return View();
+                    using (db)
+                    {
+                        Session["TestId"] = "";
+                        byte[] encode = new byte[login_table.password.Length];
+                        encode = System.Text.Encoding.UTF8.GetBytes(login_table.password);
+                        login_table.password = Convert.ToBase64String(encode);
+                        bool allDigits = login_table.email.All(char.IsDigit);
+                        if (allDigits)
+                        {
+                            var loginId = Decimal.Parse(login_table.email);
+                            var obj = db.login_table.Where(a => a.Id.Equals(loginId) && a.password.Equals(login_table.password)).FirstOrDefault();
+                            if (obj != null)
+                            {
+                                FinalTestBLL objFinalTest = new FinalTestBLL();
+                                bool isExamGiven = objFinalTest.IsExamGiven(obj);
+                                if (isExamGiven)
+                                {
+                                    ViewBag.ErrorMessage = "Exam already given you you!!";
+                                    return View();
+                                }
+                                else
+                                {
+                                    Session["id"] = obj.Id.ToString();
+                                    Session["UserProfile"] = obj;
+                                    ViewBag.UID = HttpUtility.UrlEncode(Encrypt(obj.Id.ToString()));
+                                    Session["Type"] = obj.Login_type;
+                                    payment_details payment_Details = new payment_details();
+                                    payment_Details.Id = Decimal.Parse(Session["id"].ToString());
+                                    var objPayment = pDB.payment_details.Where(a => a.Id.Equals(payment_Details.Id)).FirstOrDefault();
+                                    if (objPayment == null)
+                                    {
+
+                                        ViewBag.PaymentMessage = "Payment";
+                                        return View();
+                                    }
+                                    else
+                                    {
+                                        var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
+                                        if (insType == "School")
+                                        {
+                                            Session["TestId"] = 2;
+                                            return RedirectToAction("Index", "School");
+                                        }
+                                        else if (insType == "College")
+                                        { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
+                                        else
+                                        { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
+                                    }
+                                }
+
                             }
                             else
                             {
-                                var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
-                                if (insType == "School")
-                                {
-                                    Session["TestId"] = 2;
-                                    return RedirectToAction("Index", "School"); }
-                                else if (insType == "College")
-                                { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
-                                else
-                                { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
-                            }
-                            
-                        }
-                        else
-                        {
 
-                            if (loginId == Decimal.Parse("91620195"))
-                            {
-                                //if (login_table.password == "YWJjQDEyMw==") //"SVBUU0VfQURNSU5fTE9HSU4 =")
-                                //{
+                                if (loginId == Decimal.Parse("91620195"))
+                                {
+                                    //if (login_table.password == "YWJjQDEyMw==") //"SVBUU0VfQURNSU5fTE9HSU4 =")
+                                    //{
                                     Session["admin_login"] = "91620195";
                                     return RedirectToAction("Index", "Admin");
-                                //}
-                            }
-                            ViewBag.ErrorMessage = "Invalid Credentials....";
-                            return View();
-                        }
-
-                     }
-                    else
-                    {
-                        var obj1 = db.login_table.Where(a => a.email.Equals(login_table.email) && a.password.Equals(login_table.password)).FirstOrDefault();
-                        if (obj1 != null)
-                        {
-                            Session["id"] = obj1.Id.ToString();
-                            ViewBag.UID = HttpUtility.UrlEncode(Encrypt(obj1.Id.ToString()));
-                            Session["UserProfile"] = obj1;
-                            Session["Type"] = obj1.Login_type;
-                            obj1.LastLoginDateTime = DateTime.Now;
-                            payment_details payment_Details = new payment_details();
-                            payment_Details.Id = Decimal.Parse(Session["id"].ToString());
-                            var objPayment = pDB.payment_details.Where(a => a.Id.Equals(payment_Details.Id)).FirstOrDefault();
-                            if (objPayment == null)
-                            {
-
-                                ViewBag.PaymentMessage = "Payment";
+                                    //}
+                                }
+                                ViewBag.ErrorMessage = "Invalid Credentials....";
                                 return View();
                             }
-                            else
-                            {
-                                var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj1.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
-                                if (insType == "School")
-                                { Session["TestId"] = 2; return RedirectToAction("Index", "Full"); }
-                                else if (insType == "College")
-                                { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
-                                else
-                                { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
-                            }
+
                         }
                         else
                         {
-                            if (login_table.Id == Decimal.Parse("91620195"))
+                            var obj1 = db.login_table.Where(a => a.email.Equals(login_table.email) && a.password.Equals(login_table.password)).FirstOrDefault();
+                            if (obj1 != null)
                             {
-                                if (login_table.password == "SVBUU0VfQURNSU5fTE9HSU4=")
+                                FinalTestBLL objFinalTest = new FinalTestBLL();
+                                bool isExamGiven = objFinalTest.IsExamGiven(obj1);
+                                if (isExamGiven)
                                 {
-                                    Session["admin_login"] = "91620195";
-                                    return RedirectToAction("Index", "Admin");
+                                    ViewBag.ErrorMessage = "Exam already given you you!!";
+                                    return View();
+                                }
+                                else
+                                {
+                                    Session["id"] = obj1.Id.ToString();
+                                    ViewBag.UID = HttpUtility.UrlEncode(Encrypt(obj1.Id.ToString()));
+                                    Session["UserProfile"] = obj1;
+                                    Session["Type"] = obj1.Login_type;
+                                    obj1.LastLoginDateTime = DateTime.Now;
+                                    payment_details payment_Details = new payment_details();
+                                    payment_Details.Id = Decimal.Parse(Session["id"].ToString());
+                                    var objPayment = pDB.payment_details.Where(a => a.Id.Equals(payment_Details.Id)).FirstOrDefault();
+                                    if (objPayment == null)
+                                    {
+
+                                        ViewBag.PaymentMessage = "Payment";
+                                        return View();
+                                    }
+                                    else
+                                    {
+                                        var insType = rDB.IPTSE_Reg_table.Where(t => t.Id.Equals(obj1.Id)).Select(t1 => t1.InstitutionType).FirstOrDefault();
+                                        if (insType == "School")
+                                        { Session["TestId"] = 2; return RedirectToAction("Index", "School"); }
+                                        else if (insType == "College")
+                                        { Session["TestId"] = 2; return RedirectToAction("Index", "College"); }
+                                        else
+                                        { Session["TestId"] = 1; return RedirectToAction("Index", "Mock"); }
+                                    }
                                 }
                             }
-                            ViewBag.ErrorMessage = "Invalid Credentials....";
-                            return View();
+                            else
+                            {
+                                if (login_table.Id == Decimal.Parse("91620195"))
+                                {
+                                    if (login_table.password == "SVBUU0VfQURNSU5fTE9HSU4=")
+                                    {
+                                        Session["admin_login"] = "91620195";
+                                        return RedirectToAction("Index", "Admin");
+                                    }
+                                }
+                                ViewBag.ErrorMessage = "Invalid Credentials....";
+                                return View();
+                            }
                         }
+
+
                     }
-                  
-                   
                 }
+                return View(login_table);
             }
-            return View(login_table);
+            catch (Exception ex)
+            {
+                Session["ErrorMessage"] = ex;
+                return RedirectToAction("Index", "Error");
+            }
         }
 
 

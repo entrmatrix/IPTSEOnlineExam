@@ -20,6 +20,7 @@
         <AssociationConnector Association="IPTSE_EXAMModel.FK_tbl_Txn_Test_ResultID" ManuallyRouted="false" />
         <EntityTypeShape EntityType="IPTSE_EXAMModel.tbl_Question_Difficulty_Level" Width="1.5" PointX="0.75" PointY="2.25" />
         <AssociationConnector Association="IPTSE_EXAMModel.FK_tbl_Question_DifficultyID" />
+        <EntityTypeShape EntityType="IPTSE_EXAMModel.tbl_txn_Test_Completion" Width="1.5" PointX="0.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

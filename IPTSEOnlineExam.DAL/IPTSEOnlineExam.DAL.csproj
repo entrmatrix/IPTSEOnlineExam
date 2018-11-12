@@ -87,6 +87,9 @@
     <Compile Include="tbl_Txn_Question_Duration_Map.cs">
       <DependentUpon>OnlineExam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_txn_Test_Completion.cs">
+      <DependentUpon>OnlineExam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Txn_Test_Result.cs">
       <DependentUpon>OnlineExam.tt</DependentUpon>
     </Compile>
