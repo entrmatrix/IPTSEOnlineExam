@@ -77,10 +77,14 @@ namespace IPTSEOnlineExam.BLL
                         {
                             objQuest.MarkScored = objContext.tbl_Question.Where(t1 => t1.Id == questions.Id).Select(t2 => t2.Points).FirstOrDefault();
                         }
+                        objQuest.CreatedBy = objUserProfile.email;
+                        objQuest.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
                         objContext.tbl_Txn_Test_Result.Add(objQuest);
                         objMap.TestXQId = questions.Id;
                         objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(questions.skippedTime.Substring(questions.skippedTime.Length - 2)));
                         //objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
+                        objMap.CreatedBy= objUserProfile.email;
+                        objMap.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")); 
                         objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();
@@ -111,10 +115,14 @@ namespace IPTSEOnlineExam.BLL
                         {
                             objQuest.MarkScored = objContext.tbl_Question.Where(t1 => t1.Id == questions.Id).Select(t2 => t2.Points).FirstOrDefault();
                         }
+                        objQuest.CreatedBy = objUserProfile.email;
+                        objQuest.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
                         objContext.tbl_Txn_Test_Result.Add(objQuest);
                         objMap.TestXQId = questions.Id;
                         objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(questions.skippedTime.Substring(questions.skippedTime.Length - 2)));
                         //objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
+                        objMap.CreatedBy = objUserProfile.email;
+                        objMap.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
                         objContext.tbl_Txn_Question_Duration_Map.Add(objMap);
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();

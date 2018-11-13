@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IPTSEOnlineExam.BLL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ namespace IPTSEOnlineExam.Controllers
 {
     public class ErrorController : Controller
     {
+        login_table objUProfile = new login_table();
         // GET: Error
         public ActionResult Index()
         {
@@ -22,12 +24,19 @@ namespace IPTSEOnlineExam.Controllers
         }
         private void sendMail(Exception ex)
         {
-            string smsg = ex.InnerException != null ? ex.InnerException.ToString() : "";
+            string smsg = "";
+            if (Session["UserProfile"] != null)
+            {
+                objUProfile = (login_table)Session["UserProfile"];
+                smsg += "User Name:-" + objUProfile.email + " < br />< br /> ";
+            }
+            smsg += ex.InnerException != null ? ex.InnerException.ToString() : "";
             smsg += "<br/><br/>" + ex.StackTrace.ToString();
             try
             {
                 System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
                 message.To.Add(new MailAddress("mpathak@igentdigital.com"));
+                message.To.Add(new MailAddress("maneesh@igentdigital.com"));
                 message.From = new MailAddress("info@iptse.in");
                 message.Subject = "IPTSE Examination Error.";
                 message.Body = smsg;

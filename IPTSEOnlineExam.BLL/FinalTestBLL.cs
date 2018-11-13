@@ -86,7 +86,7 @@ namespace IPTSEOnlineExam.BLL
                         objTestCompletion.CandidateId = Convert.ToInt32(objExamCompletion.CandidateId);
                         objTestCompletion.IsExamCompleted = objExamCompletion.IsExamCompleted;
                         objTestCompletion.CreatedBy = objExamCompletion.CreatedBy;
-                        objTestCompletion.CreatedDateTime = DateTime.Now;
+                        objTestCompletion.CreatedDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
                         objContext.tbl_txn_Test_Completion.Add(objTestCompletion);
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();

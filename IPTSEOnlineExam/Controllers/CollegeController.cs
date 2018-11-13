@@ -321,20 +321,33 @@ namespace IPTSEOnlineExam.Controllers
             Session["isSkip"] = true;
             lstQuestions = (List<Questions>)Session["Questions"];
             objQusetion = new Questions();
+            if (lstQuestions.Count > 0)
+            {
+                objQusetion = lstQuestions.Where(t => t.Id == Convert.ToInt32(QuestId)).Select(t1 => t1).FirstOrDefault();
+                if (objQusetion != null)
+                {
+                    objQusetion.skipQuestions = true;
+                    Session["isBack"] = true;
+                    objQusetion.skippedTime = skippedTime.Substring(skippedTime.Length - 2);
+                    Session["remainTime"] = 60;
+                    Session["questNo"] = objQusetion.QuestNo;
+                    lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).OrderByDescending(t2 => t2.QuestNo).ToList();
+                    objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
+                    objQusetion.remainingTime = 60;
+                    objQusetion.TotalTime = spendTime;
+                    Session["qData"] = objQusetion;
 
-            objQusetion = lstQuestions.Where(t => t.Id == Convert.ToInt32(QuestId)).Select(t1 => t1).FirstOrDefault();
-            objQusetion.skipQuestions = true;
-            Session["isBack"] = true;
-            objQusetion.skippedTime = skippedTime.Substring(skippedTime.Length - 2);
-            Session["remainTime"] = 60;
-            Session["questNo"] = objQusetion.QuestNo;
-            lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).OrderByDescending(t2 => t2.QuestNo).ToList();
-            objQusetion = lstQuestions.OrderBy(t2 => t2.QuestNo).FirstOrDefault();
-            objQusetion.remainingTime = 60;
-            objQusetion.TotalTime = spendTime;
-            Session["qData"] = objQusetion;
-
-            return RedirectToAction("CollegeTest", "College");
+                    return RedirectToAction("CollegeTest", "College");
+                }
+                else
+                {
+                    return RedirectToAction("CollegeTest", "College");
+                }
+            }
+            else
+            {
+                return RedirectToAction("CollegeTest", "College");
+            }
         }
         [HttpPost]
         public ActionResult PrevQuestion(int QuestId, string TotalTime, string skippedTime)

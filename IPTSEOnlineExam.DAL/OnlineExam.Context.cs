@@ -28,11 +28,11 @@ namespace IPTSEOnlineExam.DAL
         public virtual DbSet<tbl_Question> tbl_Question { get; set; }
         public virtual DbSet<tbl_Question_Category> tbl_Question_Category { get; set; }
         public virtual DbSet<tbl_Question_Choice> tbl_Question_Choice { get; set; }
+        public virtual DbSet<tbl_Question_Difficulty_Level> tbl_Question_Difficulty_Level { get; set; }
         public virtual DbSet<tbl_Test> tbl_Test { get; set; }
         public virtual DbSet<tbl_Test_Question_Map> tbl_Test_Question_Map { get; set; }
         public virtual DbSet<tbl_Txn_Question_Duration_Map> tbl_Txn_Question_Duration_Map { get; set; }
-        public virtual DbSet<tbl_Txn_Test_Result> tbl_Txn_Test_Result { get; set; }
-        public virtual DbSet<tbl_Question_Difficulty_Level> tbl_Question_Difficulty_Level { get; set; }
         public virtual DbSet<tbl_txn_Test_Completion> tbl_txn_Test_Completion { get; set; }
+        public virtual DbSet<tbl_Txn_Test_Result> tbl_Txn_Test_Result { get; set; }
     }
 }
