@@ -91,7 +91,10 @@ namespace IPTSEOnlineExam.BLL
                         objContext.SaveChanges();
                         dbcxtransaction.Commit();
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using IPTSEOnlineExam.BLL.Models;
+﻿using IPTSEOnlineExam.BLL;
+using IPTSEOnlineExam.BLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,18 @@ namespace IPTSEOnlineExam.Controllers
 {
     public class ResultController : Controller
     {
-         public ActionResult Index()
+        login_table objUProfile = new login_table();
+        UserExamCompletion objExamCompletion;
+        FinalTestBLL objFinalTest;
+        public ActionResult Index()
         {
+            objUProfile = (login_table)Session["UserProfile"];
+            objExamCompletion = new UserExamCompletion();
+            objFinalTest = new FinalTestBLL();
+            objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+            objExamCompletion.IsExamCompleted = true;
+            objExamCompletion.CreatedBy = objUProfile.email;
+            objFinalTest.IsExamCompletion(objExamCompletion);
             return View();
         }
         public ActionResult ResultPage()
