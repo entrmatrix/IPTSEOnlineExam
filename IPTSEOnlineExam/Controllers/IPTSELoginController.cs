@@ -74,7 +74,7 @@ namespace IPTSE_portal.Controllers
                                 bool isExamGiven = objFinalTest.IsExamGiven(obj);
                                 if (isExamGiven)
                                 {
-                                    ViewBag.ErrorMessage = "Exam already given you you!!";
+                                    ViewBag.ErrorMessage = "You have already completed your exam!";
                                     return View();
                                 }
                                 else
@@ -133,7 +133,7 @@ namespace IPTSE_portal.Controllers
                                 bool isExamGiven = objFinalTest.IsExamGiven(obj1);
                                 if (isExamGiven)
                                 {
-                                    ViewBag.ErrorMessage = "Exam already given you you!!";
+                                    ViewBag.ErrorMessage = "You have already completed your exam!";
                                     return View();
                                 }
                                 else
