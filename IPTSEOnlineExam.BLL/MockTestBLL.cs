@@ -111,7 +111,7 @@ namespace IPTSEOnlineExam.BLL
                         objQuest.CandidateId = Convert.ToInt32(objUserProfile.Id);
                         objQuest.CandidateEmailId = objUserProfile.email;
                         objQuest.TestXQId = questions.Id;
-                        objQuest.ChoiceId = questions.selectedvalue;
+                        objQuest.ChoiceId = 0;
                         objQuest.MarkScored = questions.markScored;
                         var isRight = objContext.tbl_Question_Choice.Where(t => t.Id == questions.selectedvalue).Select(t1 => t1.IsAnswer).ToString();
                         if (isRight == "true")
@@ -122,7 +122,7 @@ namespace IPTSEOnlineExam.BLL
                         objQuest.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
                         objContext.tbl_Txn_Test_Result.Add(objQuest);
                         objMap.TestXQId = questions.Id;
-                        objMap.AnswerTime_Sec = Convert.ToInt32(60 - Convert.ToInt32(questions.skippedTime.Substring(questions.skippedTime.Length - 2)));
+                        objMap.AnswerTime_Sec = 60;
                         //objMap.AnswerTime_Sec = Convert.ToInt32(timeSpend);
                         objMap.CreatedBy = objUserProfile.email;
                         objMap.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
