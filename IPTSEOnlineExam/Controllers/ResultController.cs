@@ -15,14 +15,22 @@ namespace IPTSEOnlineExam.Controllers
         FinalTestBLL objFinalTest;
         public ActionResult Index()
         {
-            objUProfile = (login_table)Session["UserProfile"];
-            objExamCompletion = new UserExamCompletion();
-            objFinalTest = new FinalTestBLL();
-            objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
-            objExamCompletion.IsExamCompleted = true;
-            objExamCompletion.CreatedBy = objUProfile.email;
-            objFinalTest.IsExamCompletion(objExamCompletion);
-            return View();
+            if (Session["UserProfile"] != null)
+            {
+                objUProfile = (login_table)Session["UserProfile"];
+                objExamCompletion = new UserExamCompletion();
+                objFinalTest = new FinalTestBLL();
+                objExamCompletion.CandidateId = Convert.ToInt32(objUProfile.Id);
+                objExamCompletion.IsExamCompleted = true;
+                objExamCompletion.CreatedBy = objUProfile.email;
+                objFinalTest.IsExamCompletion(objExamCompletion);
+                Session["UserProfile"] = null;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "IPTSELogin");
+            }
         }
         public ActionResult ResultPage()
         {

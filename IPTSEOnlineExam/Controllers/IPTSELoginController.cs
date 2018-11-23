@@ -57,7 +57,7 @@ namespace IPTSE_portal.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    using (db)
+                    using (var db = new LoginDataModel())
                     {
                         Session["TestId"] = "";
                         byte[] encode = new byte[login_table.password.Length];

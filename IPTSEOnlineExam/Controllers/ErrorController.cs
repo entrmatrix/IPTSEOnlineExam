@@ -28,8 +28,9 @@ namespace IPTSEOnlineExam.Controllers
             if (Session["UserProfile"] != null)
             {
                 objUProfile = (login_table)Session["UserProfile"];
-                smsg += "User Name:-" + objUProfile.email + " < br />< br /> ";
+                smsg += "User Name:-" + objUProfile.email + " <br/><br/> ";
             }
+            smsg += ex.Message+ " <br/><br/> ";
             smsg += ex.InnerException != null ? ex.InnerException.ToString() : "";
             smsg += "<br/><br/>" + ex.StackTrace.ToString();
             try
