@@ -130,7 +130,7 @@
                 <div class="col-md-offset-2 col-md-10">
                     <input id="BACK" type="submit" value="BACK" class="btn btn-danger" onclick="setvalue(false,true);" @(ViewBag.isSkip == false ? "disabled='disabled'" : "") />
                     <input id="SKIP" type="submit" value="SKIP" class="btn btn-danger" onclick="setvalue(true,false);" />
-                    <input id="NEXT" disabled="disabled" type="submit" value="NEXT" class="btn btn-danger" onclick="setvalue(false,false);" />
+                    <input id="NEXT" disabled="disabled" type="submit" value="@(ViewBag.IsFinal == "True" ? "COMPLETE" : "NEXT")" class="btn btn-danger" onclick="setvalue(false,false);" />
                 </div>
             </div>
 

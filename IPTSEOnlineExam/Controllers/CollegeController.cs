@@ -20,6 +20,12 @@ namespace IPTSEOnlineExam.Controllers
         // GET: College
         public ActionResult Index()
         {
+            Session["Questions"] = null;
+            Session["Result"] = null;
+            Session["Next"] = null;
+            Session["isTimeOut"] = null;
+            Session["isSkip"] = null;
+            Session["isPrev"] = null;
             return View();
         }
         public ActionResult CollegeTest()
@@ -63,6 +69,10 @@ namespace IPTSEOnlineExam.Controllers
                     Questions a = (Questions)Session["qData"];
                     ViewBag.questionNo = a.QuestNo;
                     lstQuestions = (List<Questions>)Session["Questions"];
+                    if (lstQuestions.Count == 1)
+                    {
+                        ViewBag.IsFinal = "True";
+                    }
                     var lstQuestionsNew = lstQuestions.Where(t => t.skipQuestions == true).Select(t1 => t1).ToList();
                     if (lstQuestionsNew.Count > 0)
                     { ViewBag.isSkip = true; }
@@ -126,6 +136,7 @@ namespace IPTSEOnlineExam.Controllers
                     Session["Result"] = lstQuestionsForResult;
                     lstQuestions.RemoveAll(t => t.Id == aaa.Id && t.skipQuestions == false);
                     Session["Questions"] = lstQuestions.OrderBy(t2 => t2.QuestNo).ToList();
+                    
                     if (lstQuestions.Count <= 48 && lstQuestions.Count > 0 && ViewBag.questionNo <= 48)
                     {
                         lstQuestions = lstQuestions.Where(t => t.skipQuestions == false).Select(t1 => t1).ToList();
